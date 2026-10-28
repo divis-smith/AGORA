@@ -1,0 +1,308 @@
+/* ════════════════════════════════════════════
+   ÁGORA — Sistema de Diseño Global
+   style.css
+   ════════════════════════════════════════════ */
+
+/* ── VARIABLES ───────────────────────────── */
+:root {
+  /* Paleta */
+  --fondo:       #0A0A0A;
+  --panel:       #141414;
+  --superficie:  #1E1E1E;
+  --borde:       #2A2A2A;
+  --texto:       #FFFFFF;
+  --texto-dim:   #888888;
+  --acento:      #FFFFFF;
+  --acento-txt:  #0A0A0A;
+
+  /* Tipografía */
+  --fuente-body:    'Nunito', sans-serif;
+  --fuente-display: Georgia, serif;
+}
+
+/* ── RESET MÍNIMO ────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fuente-body);
+  background: var(--fondo);
+  color: var(--texto);
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── BOTONES BASE ────────────────────────── */
+
+/* Botón sólido (acción principal) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: var(--acento);
+  color: var(--acento-txt);
+  font-family: var(--fuente-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.12s;
+  text-decoration: none;
+}
+.btn-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Botón fantasma (acción secundaria) */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--texto);
+  font-family: var(--fuente-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid var(--borde);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+.btn-secondary:hover {
+  background: var(--superficie);
+  border-color: #444;
+}
+
+/* ── TOASTS (mensajes flash) ─────────────── */
+
+/* Contenedor fijo en esquina inferior derecha */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+/* Tarjeta de toast */
+.toast {
+  min-width: 240px;
+  max-width: 340px;
+  padding: 14px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border-left: 3px solid var(--texto);
+  background: var(--panel);
+  color: var(--texto);
+  border-top: 1px solid var(--borde);
+  border-right: 1px solid var(--borde);
+  border-bottom: 1px solid var(--borde);
+  /* Entrada desde la derecha */
+  animation: toastIn 0.3s ease forwards;
+  pointer-events: all;
+}
+
+/* Variantes por categoría */
+.toast--success { border-left-color: #6fcf6f; }
+.toast--error   { border-left-color: #cf6f6f; }
+.toast--warning { border-left-color: #cfb96f; }
+
+/* Salida: desliza a la derecha y desaparece */
+.toast--hide {
+  animation: toastOut 0.4s ease forwards;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(24px); }
+}
+
+/* ── SIDEBAR ─────────────────────────────── */
+
+/*
+  El sidebar es un flex column de altura completa.
+  justify-content: space-between separa el bloque de nav
+  (arriba) del avatar de usuario (abajo).
+*/
+.sidebar {
+  width: 180px;
+  min-width: 180px;
+  height: 100vh;
+  background: var(--panel);
+  border-right: 1px solid var(--borde);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 0 20px;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* Bloque superior (logo + nav) */
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Logo */
+.sidebar-logo {
+  font-family: var(--fuente-display);
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--texto);
+  letter-spacing: 1px;
+  padding: 0 16px 14px;
+  border-bottom: 1px solid var(--borde);
+  margin-bottom: 8px;
+}
+
+/* Contenedor de nav (sin estilos propios — solo agrupa) */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ítem de navegación */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--texto-dim);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  text-decoration: none;
+  /* La línea izquierda de "activo" siempre ocupa espacio para evitar saltos */
+  border-left: 2px solid transparent;
+}
+
+.nav-item:hover {
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+/* Estado activo: fondo + línea blanca izquierda */
+.nav-item.active {
+  background: var(--superficie);
+  color: var(--texto);
+  border-left-color: var(--texto);
+}
+
+/* Ícono dentro del nav-item */
+.nav-icon {
+  font-size: 14px;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── ZONA INFERIOR DEL SIDEBAR ────────────── */
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botón de cerrar sesión — separado visualmente del nav */
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--texto-dim);
+  text-decoration: none;
+  border-top: 1px solid var(--borde);
+  border-left: 2px solid transparent;
+  transition: background 0.12s, color 0.12s;
+  opacity: 0.6;                /* más apagado que los ítems normales */
+}
+.sidebar-logout:hover {
+  background: var(--superficie);
+  color: #cf6f6f;              /* rojo suave al hacer hover */
+  opacity: 1;
+  border-left-color: #cf6f6f;
+}
+
+/* ── BLOQUE DE USUARIO (pie del sidebar) ─── */
+.sidebar-user {
+  padding: 14px 16px 0;
+  border-top: 1px solid var(--borde);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Avatar circular con inicial */
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--borde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--texto);
+  flex-shrink: 0;
+}
+
+.user-info {
+  min-width: 0; /* permite que el texto se trunque con ellipsis */
+}
+
+.user-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--texto);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-carrera {
+  font-size: 9px;
+  color: var(--texto-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── RESPONSIVE: ocultar sidebar en móvil ── */
+@media (max-width: 640px) {
+  .sidebar {
+    display: none;
+  }
+}
