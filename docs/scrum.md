@@ -33,27 +33,27 @@ Un solo PO por proyecto, el PO y el Scrum Master no pueden ser la misma persona,
 
 ### Grupo Agora (dueño de este repositorio, Sprint 1)
 
-Los cuatro integrantes están en `.github/CODEOWNERS`. Divis es el Product Owner de Agora y los otros tres son Code Owners. Este reparto lo propusieron y aceptaron los dos grupos por el chat.
+Los cuatro integrantes están en `.github/CODEOWNERS`. Divis es el Product Owner de Agora y los otros tres son Code Owners.
 
 | Integrante | Usuario de GitHub | En Agora | En Galezarzal |
 |---|---|---|---|
-| Valentina Montaño | `montanovalentina-cyber` | Code Owner | Scrum Master (Sprint 1) |
+| Valentina Montaño | `montanovalentina-cyber` | Code Owner | Desarrollador (Scrum Master en el Sprint 2) |
 | Divis Smith Ramírez | `divis-smith` | Product Owner | Desarrollador |
-| Cristian Felipe Arango Gómez | `cristianfelipearango-cmyk` | Code Owner | Desarrollador (Scrum Master en el Sprint 2) |
+| Cristian Felipe Arango Gómez | `cristianfelipearango-cmyk` | Code Owner | Scrum Master (Sprint 1) |
 | Juan Cardona | `Juacoelseco` | Code Owner | Desarrollador (Scrum Master en el Sprint 3) |
 
-El Scrum Master de Galezarzal rota así: Sprint 1 Valentina, Sprint 2 Cristian, Sprint 3 Juan Cardona.
+El Scrum Master de Galezarzal rota así: Sprint 1 Cristian, Sprint 2 Valentina, Sprint 3 Juan Cardona.
 
 ### Grupo Galezarzal (desarrolla en este repositorio, Sprint 1)
 
 | Integrante | Usuario de GitHub | En Agora | En Galezarzal |
 |---|---|---|---|
 | Michael Calderon | `mihzuk` | Desarrollador | Product Owner |
-| Johan Vallecilla | `Johan-v-p` | Scrum Master | Code Owner |
-| José David Vergara | `Josdaver3000` | Desarrollador | Code Owner |
-| Carlos Lizarazo | `lizarazo2005` | Desarrollador | Code Owner |
+| Johan Vallecilla | `Johan-v-p` | Desarrollador (Scrum Master en el Sprint 2) | Code Owner |
+| José David Vergara | `Josdaver3000` | Scrum Master (Sprint 1) | Code Owner |
+| Carlos Lizarazo | `lizarazo2005` | Desarrollador (Scrum Master en el Sprint 3) | Code Owner |
 
-El Scrum Master de Agora rota así: Sprint 1 Johan, Sprint 2 José David, Sprint 3 Carlos.
+El Scrum Master de Agora rota así: Sprint 1 José David, Sprint 2 Johan, Sprint 3 Carlos.
 
 Falta confirmar con el profe si el PO y el Scrum Master de cada proyecto salen del grupo dueño o del que desarrolla, y quién asiste a cada ceremonia. Si responde otra cosa, ajustamos este reparto.
 
