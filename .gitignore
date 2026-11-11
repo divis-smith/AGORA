@@ -1,0 +1,10 @@
+﻿__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+*.db
+!.gitkeep
+.pytest_cache/
+# Imágenes subidas por los usuarios
+frontend/static/uploads/

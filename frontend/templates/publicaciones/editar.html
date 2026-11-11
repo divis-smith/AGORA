@@ -1,0 +1,86 @@
+{% extends "compartidos/base.html" %}
+{% block title %}Editar publicación{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/publicaciones/editar.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<div class="editar-layout">
+
+  <!-- ══ SIDEBAR ══ -->
+  {% set pagina_activa = 'perfil' %}
+  {% include 'compartidos/sidebar.html' %}
+
+  <!-- ══ ÁREA CENTRAL ══ -->
+  <main class="editar-main">
+
+    <a class="btn-back" href="{{ url_for('publicaciones.post_detalle', post_id=post.id) }}">← Volver al post</a>
+
+    <div class="editar-titulo">Editar publicación</div>
+
+    <form method="POST" action="{{ url_for('publicaciones.editar_publicacion', post_id=post.id) }}" enctype="multipart/form-data">
+
+      <!-- Título -->
+      <div class="campo">
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" name="titulo"
+               value="{{ post.titulo }}"
+               maxlength="120" required data-contar-titulo>
+        <div class="char-count" id="cnt-titulo">{{ post.titulo | length }} / 120</div>
+      </div>
+
+      <!-- Categoría -->
+      <div class="campo">
+        <label for="categoria">Categoría</label>
+        <div class="select-wrap">
+          <select id="categoria" name="categoria" required>
+            <option value="general"     {% if post.categoria == 'general'     %}selected{% endif %}>General</option>
+            <option value="academico"   {% if post.categoria == 'academico'   %}selected{% endif %}>Académico</option>
+            <option value="foro"        {% if post.categoria == 'foro'        %}selected{% endif %}>Foro / Pregunta</option>
+            <option value="meme"        {% if post.categoria == 'meme'        %}selected{% endif %}>Meme</option>
+            <option value="portafolio"  {% if post.categoria == 'portafolio'  %}selected{% endif %}>Portafolio</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="campo">
+        <label for="contenido">Contenido</label>
+        <textarea id="contenido" name="contenido"
+                  maxlength="2000" required data-contar-contenido>{{ post.contenido }}</textarea>
+        <div class="char-count" id="cnt-contenido">{{ post.contenido | length }} / 2000</div>
+      </div>
+
+      <!-- Imagen (opcional) -->
+      <div class="campo">
+        <label for="imagen">Imagen (opcional)</label>
+        {% if post.imagen_url %}
+          <div class="img-actual">
+            <img src="{{ post.imagen_url|media(true) }}" alt="Imagen actual de la publicación">
+          </div>
+          <label class="check-quitar">
+            <input type="checkbox" name="quitar_imagen" value="1"> Quitar imagen actual
+          </label>
+        {% endif %}
+        <input type="file" id="imagen" name="imagen"
+               accept="image/jpeg,image/png,image/webp" data-validar-imagen>
+        <div class="campo-hint">JPG, PNG o WebP, máximo 2 MB.{% if post.imagen_url %} Si eliges una nueva, reemplaza la actual.{% endif %}</div>
+      </div>
+
+      <div class="form-footer">
+        <a class="btn-secondary" href="{{ url_for('publicaciones.post_detalle', post_id=post.id) }}">
+          Cancelar
+        </a>
+        <button type="submit" class="btn-primary">Guardar cambios →</button>
+      </div>
+
+    </form>
+
+  </main>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/publicaciones/editar.js') }}"></script>
+{% endblock %}
