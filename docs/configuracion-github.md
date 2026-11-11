@@ -36,7 +36,7 @@ Ruleset `proteger-main`, activo:
 Proyecto "Agora - Tablero Scrum", público.
 
 - [x] Columnas del campo Status: Backlog, Sprint Backlog, In Progress, In Review y Done.
-- [ ] Campos: Sprint (Iteration, por ahora de 2 semanas; se ajusta cuando se confirme la duración), Story Points (número), Prioridad (Alta, Media, Baja) y Tipo (Épica, Historia de usuario, Historia técnica, Bug, Acta). Ya están Sprint y Tipo; falta renombrar Estimate a Story Points y ajustar Priority a Prioridad (Alta, Media, Baja).
+- [x] Campos: Sprint (Iteration, por ahora de 2 semanas; se ajusta cuando se confirme la duración), Story Points (número), Prioridad (Alta, Media, Baja) y Tipo (Épica, Historia de usuario, Historia técnica, Bug, Acta).
 - [x] Workflows: item agregado va a Backlog; item cerrado va a Done; pull request fusionado va a Done.
 - [x] Agregar automáticamente al Project los Issues nuevos del repo.
 - [x] Vistas: Board para el Kanban, Table para el Product Backlog y Roadmap para los sprints.
