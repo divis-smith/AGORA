@@ -31,16 +31,18 @@ Cada grupo es dueño de su proyecto y desarrolla el del otro, así que cada uno 
 
 Un solo PO por proyecto, el PO y el Scrum Master no pueden ser la misma persona, el Scrum Master también programa y el Scrum Master rota cada sprint.
 
-### Grupo Agora (dueño de este repositorio)
+### Grupo Agora (dueño de este repositorio, Sprint 1)
 
-Los cuatro integrantes son Code Owners (están en `.github/CODEOWNERS`). Falta que el grupo decida quién es el Product Owner de Agora y quién es el Scrum Master en Galezarzal. Cuando lo confirmen se llena esta tabla.
+Los cuatro integrantes están en `.github/CODEOWNERS`. Divis es el Product Owner de Agora y los otros tres son Code Owners. Este reparto lo propusieron y aceptaron los dos grupos por el chat.
 
 | Integrante | Usuario de GitHub | En Agora | En Galezarzal |
 |---|---|---|---|
-| Valentina Montaño | `montanovalentina-cyber` | Por definir (PO o Code Owner) | Por definir (Scrum Master o desarrollador) |
-| Divis Smith Ramírez | `divis-smith` | Por definir (PO o Code Owner) | Por definir (Scrum Master o desarrollador) |
-| Cristian Felipe Arango Gómez | `cristianfelipearango-cmyk` | Por definir (PO o Code Owner) | Por definir (Scrum Master o desarrollador) |
-| Juan Cardona | `Juacoelseco` | Por definir (PO o Code Owner) | Por definir (Scrum Master o desarrollador) |
+| Valentina Montaño | `montanovalentina-cyber` | Code Owner | Scrum Master (Sprint 1) |
+| Divis Smith Ramírez | `divis-smith` | Product Owner | Desarrollador |
+| Cristian Felipe Arango Gómez | `cristianfelipearango-cmyk` | Code Owner | Desarrollador (Scrum Master en el Sprint 2) |
+| Juan Cardona | `Juacoelseco` | Code Owner | Desarrollador (Scrum Master en el Sprint 3) |
+
+El Scrum Master de Galezarzal rota así: Sprint 1 Valentina, Sprint 2 Cristian, Sprint 3 Juan Cardona.
 
 ### Grupo Galezarzal (desarrolla en este repositorio, Sprint 1)
 
