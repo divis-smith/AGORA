@@ -1,4 +1,4 @@
-﻿__pycache__/
+__pycache__/
 *.pyc
 venv/
 .venv/
@@ -8,3 +8,10 @@ venv/
 .pytest_cache/
 # Imágenes subidas por los usuarios
 frontend/static/uploads/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
