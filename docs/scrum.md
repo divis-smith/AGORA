@@ -33,7 +33,7 @@ Un solo PO por proyecto, el PO y el Scrum Master no pueden ser la misma persona,
 
 ### Grupo Agora (dueño de este repositorio, Sprint 1)
 
-Los cuatro integrantes están en `.github/CODEOWNERS`. Divis es el Product Owner de Agora y los otros tres son Code Owners. Este reparto lo propusieron y aceptaron los dos grupos por el chat y es provisional hasta que el profe confirme.
+Los cuatro integrantes están en `.github/CODEOWNERS`. Divis es el Product Owner de Agora y los otros tres son Code Owners. Este reparto lo propusieron y aceptaron los dos grupos por el chat.
 
 | Integrante | Usuario de GitHub | En Agora | En Galezarzal |
 |---|---|---|---|
