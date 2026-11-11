@@ -47,7 +47,7 @@ El repositorio es de una cuenta personal, así que todos los colaboradores entra
 
 - [x] Invitaciones enviadas a Galezarzal (`mihzuk`, `Johan-v-p`, `Josdaver3000`, `lizarazo2005`) y a Agora (`montanovalentina-cyber`, `cristianfelipearango-cmyk`, `Juacoelseco`; el dueño es `divis-smith`).
 - [x] Los mismos con rol Write en el Project.
-- [ ] Que cada persona acepte su invitación al repositorio (`https://github.com/<usuario>/<repo>/invitations`). Faltan `Johan-v-p`, `Juacoelseco`, `lizarazo2005` y `montanovalentina-cyber`.
+- [ ] Que cada persona acepte su invitación al repositorio (`https://github.com/<usuario>/<repo>/invitations`). Faltan `Juacoelseco`, `lizarazo2005` y `montanovalentina-cyber`.
 - [x] El profe ve el repositorio y el Project porque son públicos.
 
 ## Primer sprint
