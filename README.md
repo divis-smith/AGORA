@@ -120,7 +120,7 @@ Trabajamos con Scrum y un tablero Kanban en GitHub Projects. Cómo lo hacemos, c
 - Diagramas en código (Mermaid): [entidad-relación](docs/diagramas/er.md), [clases](docs/diagramas/clases.md), [casos de uso](docs/diagramas/casos-de-uso.md), [secuencia](docs/diagramas/secuencia.md) y [arquitectura](docs/diagramas/arquitectura.md).
 - [Colaboración entre grupos](docs/colaboracion-entre-grupos.md), [backlog inicial](docs/backlog-inicial.md) y [configuración de GitHub](docs/configuracion-github.md).
 - Los diagramas originales de Desarrollo de Software I, en [draw.io](docs/legacy/Diagramas_ICONIX.drawio): descripción del problema, casos de uso, robustez, dominio, entidad-relación, paquetes y secuencia.
-- Los criterios de aceptación en Gherkin están en [`features/`](features/) y las actas en [`docs/actas/`](docs/actas/).
+- Los criterios de aceptación en Gherkin están en [`features/`](features/) y las actas en [`docs/sprints/`](docs/sprints/).
 
 Si un cambio modifica el diseño original, hay que actualizar los diagramas y la documentación en el mismo pull request.
 

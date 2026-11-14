@@ -6,7 +6,7 @@ Acá comparamos lo que nos comprometimos a hacer en el acta de Sprint Planning c
 |---|---|
 | Sprint | N |
 | Fecha y hora | AAAA-MM-DD, de HH:MM a HH:MM |
-| Acta de Planning de este sprint | `docs/actas/AAAA-MM-DD-sprint-N-planning.md` |
+| Acta de Planning de este sprint | `docs/sprints/AAAA-MM-DD-sprint-N-planning.md` |
 | Scrum Master y Product Owner | |
 | Asistentes (y el profe, si asiste) | |
 
