@@ -53,4 +53,4 @@ El repositorio es de una cuenta personal, así que todos los colaboradores entra
 
 - [x] Roles definidos y anotados en `docs/scrum.md`.
 - [ ] Épicas e historias creadas como Issues con las plantillas (el punto de partida está en `docs/backlog-inicial.md`).
-- [ ] Sprint Planning hecho y su acta subida a `docs/actas/`.
+- [ ] Sprint Planning hecho y su acta subida a `docs/sprints/`.
