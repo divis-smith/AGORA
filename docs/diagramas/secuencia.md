@@ -30,7 +30,7 @@ sequenceDiagram
 
 ## Reportar y resolver un reporte (RF-32 y RF-35): `POST /reporte/nuevo` y `POST /moderacion/resolver/<id>`
 
-Hoy ninguna pantalla llama a `/reporte/nuevo` (RF-32), pero el servicio funciona y tiene tests.
+Desde el detalle de una publicación, el botón «⚑ Reportar» abre un modal y llama a `/reporte/nuevo` (RF-32). Los comentarios y los perfiles todavía no tienen botón, pero el servicio ya los acepta.
 
 ```mermaid
 sequenceDiagram
@@ -45,6 +45,8 @@ sequenceDiagram
     R->>S: obtener_usuario_reportado(tipo, contenido_id)
     alt el contenido no existe
         R-->>E: 404 "El contenido reportado no existe."
+    else el contenido es del propio usuario
+        R-->>E: 400 "No puedes reportar tu propio contenido."
     else ya hay un reporte abierto del mismo usuario
         R-->>E: "Ya reportaste este contenido."
     else reporte nuevo
