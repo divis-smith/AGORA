@@ -282,6 +282,15 @@ class CrearReporte(ModeracionBase):
         self.assertFalse(self.enviar('publicacion', PUBLICACION).get_json()['ok'])
         self.assertEqual(self.consulta("SELECT COUNT(*) AS n FROM reportes")['n'], 1)
 
+    def test_no_permite_reportar_contenido_propio(self):
+        for tipo, referencia in (('publicacion', PUBLICACION), ('comentario', COMENTARIO), ('usuario', AUTOR)):
+            with self.subTest(tipo=tipo):
+                respuesta = self.cliente(AUTOR).post(
+                    '/reporte/nuevo', data={'tipo': tipo, 'contenido_id': referencia, 'motivo': 'spam'},
+                )
+                self.assertEqual(respuesta.status_code, 400)
+                self.assertFalse(respuesta.get_json()['ok'])
+        self.assertEqual(self.consulta("SELECT COUNT(*) AS n FROM reportes")['n'], 0)
 
 class PantallaDeModeracion(ModeracionBase):
     def html(self):

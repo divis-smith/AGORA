@@ -42,8 +42,11 @@ def crear_blueprint(get_db):
             return jsonify({'ok': False, 'error': 'Datos incompletos'}), 400
         conn = get_db()
         try:
-            if not servicio.obtener_usuario_reportado(conn, tipo, contenido_id):
+            objetivo = servicio.obtener_usuario_reportado(conn, tipo, contenido_id)
+            if not objetivo:
                 return jsonify({'ok': False, 'error': 'El contenido reportado no existe.'}), 404
+            if objetivo['id'] == session['user_id']:
+                return jsonify({'ok': False, 'error': 'No puedes reportar tu propio contenido.'}), 400
             # Evitar reportes duplicados del mismo usuario
             if servicio.existe_reporte_abierto(conn, session['user_id'], tipo, contenido_id):
                 return jsonify({'ok': False, 'error': 'Ya reportaste este contenido.'})
