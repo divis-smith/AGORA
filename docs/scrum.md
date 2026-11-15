@@ -12,7 +12,7 @@ Desarrollamos el proyecto con Scrum y llevamos el tablero Kanban en GitHub Proje
 | Requerimientos funcionales y no funcionales | `docs/requerimientos/` y Issues con la etiqueta `RF` o `RNF` |
 | Criterios de aceptación | Gherkin dentro del Issue y en `features/` |
 | DoD y DoR | `docs/DoD.md` y `docs/DoR.md` |
-| Actas | `docs/actas/` |
+| Actas | `docs/sprints/` |
 | Diagramas | Código Mermaid en `docs/diagramas/` |
 | Cambios de diseño | Pull Request con el checklist de la plantilla |
 
