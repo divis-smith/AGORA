@@ -287,3 +287,29 @@
   border: 1px solid var(--borde);
   margin: 16px 0;
 }
+
+
+/* ── Modales (esta página no los tenía definidos) ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 800;
+  display: none;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.visible { display: flex; }
+.modal-box {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  padding: 28px;
+  width: 100%; max-width: 520px;
+  max-height: 90vh; overflow-y: auto;
+}
+
+/* ── Reportar publicación ── */
+.post-boton-reportar { margin-left: auto; }
+.reporte-motivos { display: grid; gap: 8px; margin-bottom: 16px; }
+.reporte-motivo { font-size: 12px; color: var(--texto-dim); cursor: pointer; }
+.reporte-mensaje { font-size: 11px; min-height: 16px; margin-bottom: 16px; }
+.reporte-mensaje.ok { color: #6fcf8f; }
+.reporte-mensaje.error { color: #cf6f6f; }
