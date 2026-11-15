@@ -10,7 +10,7 @@ Característica: Reportar una publicación
     Dado que inicié sesión como estudiante y estoy viendo una publicación de otra persona
     Cuando pulso reportar, elijo un motivo y envío el reporte
     Entonces veo un mensaje de confirmación
-    Y el reporte queda registrado con estado abierto
+    Y el reporte queda registrado con estado enviado
 
   Escenario: Reporte duplicado
     Dado que ya reporté esa publicación y mi reporte sigue abierto
