@@ -3,7 +3,7 @@
 | | |
 | --- | --- |
 | Sprint | 1 |
-| Fecha y hora de la reunión | 2026-11-13, de 09:37 a 10:20 |
+| Fecha y hora de la reunión | 2026-11-13, de 09:37 PM a 10:20 PM |
 | Duración del sprint | Por confirmar con el profe |
 | Lugar o medio | Meet |
 | Scrum Master | José David Vergara Zapata |

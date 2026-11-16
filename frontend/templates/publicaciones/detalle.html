@@ -83,6 +83,14 @@
         </button>
       </div>
       {% endif %}
+
+      {% if not es_propio %}
+      <button class="reaccion-btn post-boton-compacto post-boton-reportar"
+              data-abrir-modal="modal-reportar-post">
+        ⚑ Reportar
+      </button>
+      {% endif %}
+
     </div>
 
     <div class="sep"></div>
@@ -160,6 +168,40 @@
   </div>
 </div>
 {% endif %}
+
+<!-- ══ MODAL REPORTAR (solo si NO es propio) ══ -->
+{% if not es_propio %}
+<div class="modal-overlay modal-eliminar-capa" id="modal-reportar-post">
+  <div class="modal-box modal-eliminar-caja">
+    <div class="modal-eliminar-titulo">⚑ Reportar publicación</div>
+    <p class="modal-eliminar-texto">
+      Elige un motivo. Los moderadores revisarán tu reporte.
+    </p>
+    <form id="form-reportar" data-reportar-publicacion="{{ post.id }}">
+      <div class="reporte-motivos">
+        {% for valor, etiqueta in [
+          ('spam', 'Spam'),
+          ('acoso', 'Acoso'),
+          ('contenido_inapropiado', 'Contenido inapropiado'),
+          ('desinformacion', 'Desinformación'),
+          ('plagio', 'Plagio'),
+          ('otro', 'Otro')
+        ] %}
+        <label class="reporte-motivo">
+          <input type="radio" name="motivo" value="{{ valor }}" required> {{ etiqueta }}
+        </label>
+        {% endfor %}
+      </div>
+      <div class="reporte-mensaje" id="reporte-mensaje" role="status"></div>
+      <div class="modal-eliminar-acciones">
+        <button type="button" class="btn-secondary" data-cerrar-modal="modal-reportar-post">Cancelar</button>
+        <button type="submit" class="btn-primary">Enviar reporte</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
 
 {% block extra_scripts %}

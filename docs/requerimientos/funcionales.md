@@ -37,7 +37,7 @@ En la columna Estado anotamos si el requerimiento ya está hecho en `main`: "Sí
 | RF-29 | Eventos | El sistema debe permitir eliminar un evento al creador, al moderador o al administrador. | Sí |
 | RF-30 | Eventos | El sistema debe permitir inscribirse a un evento y cancelar la inscripción, respetando el cupo. | Sí |
 | RF-31 | Eventos | El sistema debe permitir ver los participantes de un evento. | Sí |
-| RF-32 | Reportes | El sistema debe permitir reportar una publicación, un comentario o un usuario, evitando reportes duplicados abiertos. | Parcial: el servicio (`POST /reporte/nuevo`) funciona y tiene tests, pero ninguna pantalla lo llama; las plantillas `reportar_*.html` no tienen ruta |
+| RF-32 | Reportes | El sistema debe permitir reportar una publicación, un comentario o un usuario, evitando reportes duplicados abiertos. | Parcial: se puede reportar una publicación desde su detalle (botón «⚑ Reportar» y modal) y nadie puede reportar su propio contenido; faltan los botones para comentarios y usuarios, y las plantillas `reportar_*.html` siguen sin ruta |
 | RF-33 | Reportes | El sistema debe permitir al usuario consultar el estado de sus reportes. | Parcial: la ruta `/reportes` existe pero responde error 500 porque `reportes.html` enlaza a rutas que no existen |
 | RF-34 | Moderación | El sistema debe permitir al moderador y al administrador revisar los reportes abiertos. | Sí |
 | RF-35 | Moderación | El sistema debe permitir resolver un reporte: ignorarlo, eliminar el contenido o suspender al usuario. | Sí |
