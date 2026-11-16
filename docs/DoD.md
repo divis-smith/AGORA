@@ -3,6 +3,7 @@
 Una historia, ya sea de usuario o técnica, está terminada cuando se cumple todo esto:
 
 - [ ] Cumple los criterios de aceptación en Gherkin que están en el Issue.
+- [ ] Los escenarios Gherkin del Issue están también en `features/`, en un archivo `.feature` por funcionalidad hecho a partir de `features/_plantilla.feature`.
 - [ ] El código está en un Pull Request enlazado al Issue (`Closes #N`).
 - [ ] Los tests pasan: `python -m unittest discover -s tests` en local y el workflow de CI en verde. Si la historia agrega comportamiento, agrega también sus tests.
 - [ ] Un Code Owner revisó y aprobó el PR.
