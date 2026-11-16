@@ -7,7 +7,7 @@ from backend.rutas.decoradores import login_required
 from backend.servicios import publicaciones as servicio
 
 
-def crear_blueprint(get_db):
+def crear_blueprint(get_db, socketio):
     """Crea el Blueprint de publicaciones."""
     blueprint = Blueprint('publicaciones', __name__)
 
@@ -109,7 +109,15 @@ def crear_blueprint(get_db):
                 flash('Publicación no encontrada.', 'error')
                 return redirect(url_for('publicaciones.feed'))
 
-            servicio.comentar(conn, post_id, session['user_id'], contenido)
+            mensaje = f"{session['nombre']} comentó tu publicación."
+            url = url_for('publicaciones.post_detalle', post_id=post_id)
+            notificado = servicio.comentar(conn, post_id, session['user_id'], contenido, mensaje, url)
+            if notificado:
+                socketio.emit('notificacion', {
+                    'mensaje': mensaje,
+                    'tipo': 'comentario',
+                    'url': url,
+                }, room=f'user_{notificado}')
         except Exception as e:
             flash(f'Error al comentar: {e}', 'error')
         finally:

@@ -93,12 +93,28 @@ def esta_publicada(conn, post_id):
     ).fetchone() is not None
 
 
-def comentar(conn, post_id, autor_id, contenido):
+def comentar(conn, post_id, autor_id, contenido, mensaje, url):
+    """Guarda el comentario y notifica al dueño de la publicación.
+
+    No notifica si el dueño comenta su propia publicación. Devuelve el id del
+    usuario notificado, o None si no se notificó a nadie.
+    """
     conn.execute(
         "INSERT INTO comentarios (publicacion_id, autor_id, contenido) VALUES (?, ?, ?)",
         (post_id, autor_id, contenido),
     )
+    dueno_id = conn.execute(
+        "SELECT autor_id FROM publicaciones WHERE id = ?", (post_id,)
+    ).fetchone()['autor_id']
+    notificado = None
+    if dueno_id != autor_id:
+        conn.execute(
+            "INSERT INTO notificaciones (usuario_id, tipo, mensaje, url) VALUES (?, 'comentario', ?, ?)",
+            (dueno_id, mensaje, url),
+        )
+        notificado = dueno_id
     conn.commit()
+    return notificado
 
 
 def alternar_reaccion(conn, post_id, usuario_id):
