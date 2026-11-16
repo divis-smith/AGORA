@@ -10,9 +10,11 @@ import sqlite3
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from backend import aplicacion as agora  # noqa: E402
+from backend.servicios import publicaciones as servicio  # noqa: E402
 
 AUTOR, COMENTARISTA = 1, 2
 PUBLICACION = 10
@@ -87,6 +89,12 @@ class NotificacionComentarioBase(unittest.TestCase):
         conn.close()
         return filas
 
+    def total(self, tabla):
+        conn = agora.get_db()
+        n = conn.execute(f"SELECT COUNT(*) FROM {tabla}").fetchone()[0]
+        conn.close()
+        return n
+
 
 class NotificacionComentarioTest(NotificacionComentarioBase):
     def test_comentario_ajeno_notifica_al_autor_e_indica_quien_comento(self):
@@ -113,6 +121,49 @@ class NotificacionComentarioTest(NotificacionComentarioBase):
         self.comentar(COMENTARISTA)
 
         self.assertEqual(self.notificaciones(COMENTARISTA), [])
+
+    def test_comentar_publicacion_inexistente_no_guarda_nada(self):
+        respuesta = self.comentar(COMENTARISTA, post_id=999)
+
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertEqual(self.total('comentarios'), 0)
+        self.assertEqual(self.total('notificaciones'), 0)
+
+    def test_servicio_lanza_error_si_la_publicacion_no_existe(self):
+        conn = agora.get_db()
+        try:
+            with self.assertRaises(ValueError):
+                servicio.comentar(conn, 999, COMENTARISTA, 'hola', '/post/999')
+            self.assertEqual(conn.execute("SELECT COUNT(*) FROM comentarios").fetchone()[0], 0)
+        finally:
+            conn.close()
+
+
+class AvisoEnVivoComentarioTest(NotificacionComentarioBase):
+    def test_emite_el_aviso_a_la_sala_del_autor(self):
+        with mock.patch.object(agora.socketio, 'emit') as emit:
+            self.comentar(COMENTARISTA)
+
+        emit.assert_called_once_with(
+            'notificacion',
+            {'mensaje': 'Camilo comentó tu publicación.', 'tipo': 'comentario',
+             'url': f'/post/{PUBLICACION}'},
+            room=f'user_{AUTOR}',
+        )
+
+    def test_no_emite_nada_si_comenta_su_propia_publicacion(self):
+        with mock.patch.object(agora.socketio, 'emit') as emit:
+            self.comentar(AUTOR)
+
+        emit.assert_not_called()
+
+    def test_si_falla_el_aviso_el_comentario_y_la_notificacion_quedan_guardados(self):
+        with mock.patch.object(agora.socketio, 'emit', side_effect=RuntimeError('socket caído')):
+            respuesta = self.comentar(COMENTARISTA)
+
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertEqual(self.total('comentarios'), 1)
+        self.assertEqual(len(self.notificaciones(AUTOR)), 1)
 
 
 if __name__ == '__main__':
