@@ -2,6 +2,10 @@
 .notif-main { flex: 1; max-width: 640px; padding: 40px 32px; }
 
 .notif-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
   margin-bottom: 28px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--borde);
@@ -17,17 +21,42 @@
 .notif-card {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 14px 16px;
+  gap: 8px;
   background: var(--panel);
   border: 1px solid var(--borde);
   margin-bottom: 6px;
-  text-decoration: none;
-  color: var(--texto);
   transition: border-color 0.12s;
 }
 .notif-card:hover { border-color: #444; }
 .notif-card.no-leida { border-left: 2px solid var(--texto); }
+
+.notif-enlace {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  padding: 14px 0 14px 16px;
+  text-decoration: none;
+  color: var(--texto);
+}
+
+.notif-acciones { display: flex; gap: 4px; padding: 12px 12px 0 0; }
+.notif-accion,
+.notif-leer-todas {
+  background: none;
+  border: 1px solid var(--borde);
+  color: var(--texto-dim);
+  font-family: var(--fuente-body);
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s;
+}
+.notif-accion { width: 28px; height: 28px; font-size: 12px; }
+.notif-leer-todas { padding: 6px 10px; font-size: 11px; white-space: nowrap; }
+.notif-accion:hover,
+.notif-leer-todas:hover { color: var(--texto); border-color: #444; }
+.notif-accion:disabled,
+.notif-leer-todas:disabled { opacity: 0.5; cursor: default; }
 
 .notif-icono {
   width: 36px; height: 36px; border-radius: 50%;

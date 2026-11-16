@@ -150,4 +150,41 @@ def crear_blueprint(get_db, socketio):
         conn.close()
         return jsonify({'total': total})
 
+    def _responder_cambio(conn, cambiado):
+        """Respuesta común de marcar y eliminar: 404 si la notificación no es del usuario."""
+        if not cambiado:
+            return jsonify({'ok': False, 'error': 'La notificación no existe.'}), 404
+        total = servicio.contar_notificaciones_no_leidas(conn, session['user_id'])
+        return jsonify({'ok': True, 'no_leidas': total})
+
+    @blueprint.route('/notificaciones/<int:notificacion_id>/leida', methods=['POST'])
+    @login_required
+    def marcar_notificacion_leida(notificacion_id):
+        conn = get_db()
+        try:
+            cambiado = servicio.marcar_notificacion_leida(conn, session['user_id'], notificacion_id)
+            return _responder_cambio(conn, cambiado)
+        finally:
+            conn.close()
+
+    @blueprint.route('/notificaciones/leer-todas', methods=['POST'])
+    @login_required
+    def marcar_todas_leidas():
+        conn = get_db()
+        try:
+            servicio.marcar_todas_leidas(conn, session['user_id'])
+            return jsonify({'ok': True, 'no_leidas': 0})
+        finally:
+            conn.close()
+
+    @blueprint.route('/notificaciones/<int:notificacion_id>/eliminar', methods=['POST'])
+    @login_required
+    def eliminar_notificacion(notificacion_id):
+        conn = get_db()
+        try:
+            cambiado = servicio.eliminar_notificacion(conn, session['user_id'], notificacion_id)
+            return _responder_cambio(conn, cambiado)
+        finally:
+            conn.close()
+
     return blueprint

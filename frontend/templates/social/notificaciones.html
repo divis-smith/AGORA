@@ -11,29 +11,46 @@
   <main class="notif-main">
 
     <div class="notif-header">
-      <h1>Notificaciones</h1>
-      <p>Las últimas 50 notificaciones de tu actividad en Ágora.</p>
+      <div>
+        <h1>Notificaciones</h1>
+        <p>Las últimas 50 notificaciones de tu actividad en Ágora.</p>
+      </div>
+      {% if notificaciones|selectattr('leida', 'equalto', 0)|list %}
+        <button type="button" class="notif-leer-todas" data-leer-todas>Marcar todas como leídas</button>
+      {% endif %}
     </div>
 
     {% set iconos = {'seguidor': '👤', 'reaccion': '👏', 'comentario': '💬', 'respuesta': '↩️', 'mencion': '📢'} %}
 
-    {% if notificaciones %}
+    <div id="notif-lista">
       {% for n in notificaciones %}
-        <a class="notif-card {{ '' if n.leida else 'no-leida' }}" href="{{ n.url or '#' }}">
-          <div class="notif-icono">{{ iconos.get(n.tipo, '🔔') }}</div>
-          <div class="notif-contenido">
-            <div class="notif-mensaje">{{ n.mensaje }}</div>
-            <div class="notif-tiempo">{{ n.creado_en }}</div>
+        <div class="notif-card {{ '' if n.leida else 'no-leida' }}" data-notificacion="{{ n.id }}">
+          <a class="notif-enlace" href="{{ n.url or '#' }}" data-abrir-notificacion="{{ n.id }}">
+            <div class="notif-icono">{{ iconos.get(n.tipo, '🔔') }}</div>
+            <div class="notif-contenido">
+              <div class="notif-mensaje">{{ n.mensaje }}</div>
+              <div class="notif-tiempo">{{ n.creado_en }}</div>
+            </div>
+          </a>
+          <div class="notif-acciones">
+            {% if not n.leida %}
+              <button type="button" class="notif-accion" data-marcar-leida="{{ n.id }}" title="Marcar como leída" aria-label="Marcar como leída">✓</button>
+            {% endif %}
+            <button type="button" class="notif-accion" data-eliminar-notificacion="{{ n.id }}" title="Eliminar" aria-label="Eliminar notificación">✕</button>
           </div>
-        </a>
+        </div>
       {% endfor %}
-    {% else %}
-      <div class="notif-vacio">
-        <span>🔔</span>
-        Aún no tienes notificaciones.
-      </div>
-    {% endif %}
+    </div>
+
+    <div class="notif-vacio" id="notif-vacio" {% if notificaciones %}hidden{% endif %}>
+      <span>🔔</span>
+      Aún no tienes notificaciones.
+    </div>
 
   </main>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/social/notificaciones.js') }}"></script>
 {% endblock %}

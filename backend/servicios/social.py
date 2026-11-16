@@ -205,14 +205,38 @@ def ids_seguidos(conn, usuario_id):
 
 
 def leer_notificaciones(conn, usuario_id):
-    """Devuelve las últimas notificaciones y las marca como leídas."""
-    notificaciones = conn.execute(
-        "SELECT * FROM notificaciones WHERE usuario_id = ? ORDER BY creado_en DESC LIMIT 50",
+    """Devuelve las últimas 50 notificaciones sin cambiar su estado."""
+    return conn.execute(
+        "SELECT * FROM notificaciones WHERE usuario_id = ? ORDER BY creado_en DESC, id DESC LIMIT 50",
         (usuario_id,),
     ).fetchall()
-    conn.execute("UPDATE notificaciones SET leida = 1 WHERE usuario_id = ?", (usuario_id,))
+
+
+def marcar_notificacion_leida(conn, usuario_id, notificacion_id):
+    """Marca como leída una notificación del usuario. Devuelve False si no es suya o no existe."""
+    cursor = conn.execute(
+        "UPDATE notificaciones SET leida = 1 WHERE id = ? AND usuario_id = ?",
+        (notificacion_id, usuario_id),
+    )
     conn.commit()
-    return notificaciones
+    return cursor.rowcount == 1
+
+
+def marcar_todas_leidas(conn, usuario_id):
+    conn.execute(
+        "UPDATE notificaciones SET leida = 1 WHERE usuario_id = ? AND leida = 0", (usuario_id,)
+    )
+    conn.commit()
+
+
+def eliminar_notificacion(conn, usuario_id, notificacion_id):
+    """Elimina una notificación del usuario. Devuelve False si no es suya o no existe."""
+    cursor = conn.execute(
+        "DELETE FROM notificaciones WHERE id = ? AND usuario_id = ?",
+        (notificacion_id, usuario_id),
+    )
+    conn.commit()
+    return cursor.rowcount == 1
 
 
 def contar_notificaciones_no_leidas(conn, usuario_id):
