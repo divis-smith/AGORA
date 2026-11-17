@@ -107,7 +107,7 @@ class ModeracionBase(unittest.TestCase):
         conn = agora.get_db()
         cur = conn.execute(
             "INSERT INTO reportes (reportado_por, tipo, referencia_id, motivo, estado) VALUES (?, ?, ?, 'm', ?)",
-            (TESTIGO, tipo, referencia, estado),
+            (reportado_por, tipo, referencia, estado),
         )
         conn.commit()
         reporte_id = cur.lastrowid
@@ -316,6 +316,63 @@ class PantallaDeModeracion(ModeracionBase):
         self.assertNotIn('Eliminar contenido', html)
         self.assertIn('Suspender usuario', html)
 
+class PantallaDeMisReportes(ModeracionBase):
+    def html(self, usuario=TESTIGO):
+        return self.cliente(usuario).get('/reportes')
+
+    def test_muestra_mis_reportes_con_su_estado_actual(self):
+        self.crear_reporte(
+            'publicacion',
+            PUBLICACION,
+            estado='enviado',
+            reportado_por=TESTIGO,
+        )
+        self.crear_reporte(
+            'comentario',
+            COMENTARIO,
+            estado='en_revision',
+            reportado_por=TESTIGO,
+        )
+        self.crear_reporte(
+            'usuario',
+            TESTIGO,
+            estado='resuelto',
+            reportado_por=TESTIGO,
+        )
+
+        respuesta = self.html()
+
+        self.assertEqual(respuesta.status_code, 200)
+        contenido = respuesta.get_data(as_text=True)
+        self.assertIn('estado-enviado', contenido)
+        self.assertIn('estado-en_revision', contenido)
+        self.assertIn('estado-resuelto', contenido)
+
+    def test_no_muestra_reportes_de_otros_usuarios(self):
+        self.crear_reporte(
+            'publicacion',
+            PUBLICACION,
+            reportado_por=TESTIGO,
+        )
+        self.crear_reporte(
+            'comentario',
+            COMENTARIO,
+            reportado_por=AUTOR,
+        )
+
+        respuesta = self.html(TESTIGO)
+
+        self.assertEqual(respuesta.status_code, 200)
+        contenido = respuesta.get_data(as_text=True)
+        self.assertEqual(contenido.count('class="reporte-card"'), 1)
+
+    def test_muestra_mensaje_si_no_tiene_reportes(self):
+        respuesta = self.html()
+
+        self.assertEqual(respuesta.status_code, 200)
+        contenido = respuesta.get_data(as_text=True)
+        self.assertIn('Sin reportes', contenido)
+        self.assertIn('No has enviado ningún reporte aún.', contenido)
 
 if __name__ == '__main__':
     unittest.main()
