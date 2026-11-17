@@ -93,12 +93,44 @@ def esta_publicada(conn, post_id):
     ).fetchone() is not None
 
 
-def comentar(conn, post_id, autor_id, contenido):
+def comentar(conn, post_id, autor_id, contenido, url):
+    """Guarda el comentario y notifica al dueño de la publicación.
+
+    `url` es la dirección a la que lleva la notificación. No se notifica si el
+    dueño comenta su propia publicación. Devuelve los datos de la notificación
+    creada (usuario_id, tipo, mensaje, url) o None si no se notificó a nadie.
+    Lanza ValueError si la publicación no existe.
+    """
+    publicacion = conn.execute(
+        "SELECT autor_id FROM publicaciones WHERE id = ?", (post_id,)
+    ).fetchone()
+    if publicacion is None:
+        raise ValueError('La publicación no existe.')
+
     conn.execute(
         "INSERT INTO comentarios (publicacion_id, autor_id, contenido) VALUES (?, ?, ?)",
         (post_id, autor_id, contenido),
     )
+
+    notificacion = None
+    dueno_id = publicacion['autor_id']
+    if dueno_id != autor_id:
+        comentarista = conn.execute(
+            "SELECT nombre FROM usuarios WHERE id = ?", (autor_id,)
+        ).fetchone()
+        notificacion = {
+            'usuario_id': dueno_id,
+            'tipo': 'comentario',
+            'mensaje': f"{comentarista['nombre']} comentó tu publicación.",
+            'url': url,
+        }
+        conn.execute(
+            "INSERT INTO notificaciones (usuario_id, tipo, mensaje, url) VALUES (?, ?, ?, ?)",
+            (notificacion['usuario_id'], notificacion['tipo'],
+             notificacion['mensaje'], notificacion['url']),
+        )
     conn.commit()
+    return notificacion
 
 
 def alternar_reaccion(conn, post_id, usuario_id):
