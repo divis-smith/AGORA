@@ -103,7 +103,7 @@ class ModeracionBase(unittest.TestCase):
         conn.commit()
         conn.close()
 
-    def crear_reporte(self, tipo, referencia, estado='enviado'):
+    def crear_reporte(self, tipo, referencia, estado='enviado', reportado_por=TESTIGO):
         conn = agora.get_db()
         cur = conn.execute(
             "INSERT INTO reportes (reportado_por, tipo, referencia_id, motivo, estado) VALUES (?, ?, ?, 'm', ?)",
