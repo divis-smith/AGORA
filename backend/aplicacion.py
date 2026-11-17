@@ -107,7 +107,7 @@ def inyectar_avatar():
 
 
 app.register_blueprint(crear_blueprint_autenticacion(get_db))
-app.register_blueprint(crear_blueprint_publicaciones(get_db))
+app.register_blueprint(crear_blueprint_publicaciones(get_db, socketio))
 app.register_blueprint(crear_blueprint_social(get_db, socketio))
 app.register_blueprint(crear_blueprint_foros(get_db))
 app.register_blueprint(crear_blueprint_portafolio(get_db))

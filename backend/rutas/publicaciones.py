@@ -1,13 +1,15 @@
 """Rutas del feed y de las publicaciones."""
 
-from flask import Blueprint, flash, jsonify, redirect, render_template, request, session, url_for
+from flask import (
+    Blueprint, current_app, flash, jsonify, redirect, render_template, request, session, url_for,
+)
 
 from backend.nucleo import imagenes
 from backend.rutas.decoradores import login_required
 from backend.servicios import publicaciones as servicio
 
 
-def crear_blueprint(get_db):
+def crear_blueprint(get_db, socketio):
     """Crea el Blueprint de publicaciones."""
     blueprint = Blueprint('publicaciones', __name__)
 
@@ -104,16 +106,30 @@ def crear_blueprint(get_db):
             return redirect(url_for('publicaciones.post_detalle', post_id=post_id))
 
         conn = get_db()
+        notificacion = None
         try:
             if not servicio.esta_publicada(conn, post_id):
                 flash('Publicación no encontrada.', 'error')
                 return redirect(url_for('publicaciones.feed'))
 
-            servicio.comentar(conn, post_id, session['user_id'], contenido)
+            url = url_for('publicaciones.post_detalle', post_id=post_id)
+            notificacion = servicio.comentar(conn, post_id, session['user_id'], contenido, url)
         except Exception as e:
             flash(f'Error al comentar: {e}', 'error')
         finally:
             conn.close()
+
+        # El comentario ya quedó guardado: si falla el aviso en vivo, no se le
+        # muestra un error al usuario; la notificación igual está en su bandeja.
+        if notificacion:
+            try:
+                socketio.emit('notificacion', {
+                    'mensaje': notificacion['mensaje'],
+                    'tipo': notificacion['tipo'],
+                    'url': notificacion['url'],
+                }, room=f"user_{notificacion['usuario_id']}")
+            except Exception:
+                current_app.logger.exception('No se pudo enviar el aviso en vivo del comentario')
 
         return redirect(url_for('publicaciones.post_detalle', post_id=post_id))
 

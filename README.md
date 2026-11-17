@@ -85,7 +85,7 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 python -m unittest discover -s tests -v
 ```
 
-Son 72 pruebas. Cubren reportes, suspensión de cuentas, ajustes de cuenta y subida de imágenes; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
+Son 82 pruebas. Cubren reportes, suspensión de cuentas, ajustes de cuenta, subida de imágenes y notificaciones por comentarios; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
 
 ## Estructura del proyecto
 
