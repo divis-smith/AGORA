@@ -12,7 +12,7 @@ Hay tres roles: estudiante, moderador y administrador.
 
 **Administradores.** Hoy tienen los mismos permisos que los moderadores (también pueden eliminar cualquier evento). Su panel de administración todavía no funciona.
 
-Falta por hacer, entre otras cosas: verificar la cuenta y recuperar la contraseña, hashtags y visibilidad de las publicaciones, las preferencias de privacidad y apariencia, la gestión de usuarios y foros desde el panel de administración, y la interfaz para reportar comentarios y usuarios (las publicaciones ya se pueden reportar). Hoy `/admin` y `/reportes` responden con error. Todo eso está en el [backlog inicial](docs/backlog-inicial.md) y el estado de cada requerimiento en [`docs/requerimientos/`](docs/requerimientos/funcionales.md).
+Falta por hacer, entre otras cosas: verificar la cuenta y recuperar la contraseña, hashtags y visibilidad de las publicaciones, las preferencias de privacidad y apariencia, la gestión de usuarios y foros desde el panel de administración, y la interfaz para reportar comentarios y usuarios (las publicaciones ya se pueden reportar). Hoy `/admin` responde con error. Todo eso está en el [backlog inicial](docs/backlog-inicial.md) y el estado de cada requerimiento en [`docs/requerimientos/`](docs/requerimientos/funcionales.md).
 
 ## Con qué está hecho
 
@@ -85,7 +85,7 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 python -m unittest discover -s tests -v
 ```
 
-Son 82 pruebas. Cubren reportes, suspensión de cuentas, ajustes de cuenta, subida de imágenes y notificaciones por comentarios; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
+Son 85 pruebas. Cubren reportes, suspensión de cuentas, ajustes de cuenta, subida de imágenes y notificaciones por comentarios; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
 
 ## Estructura del proyecto
 
