@@ -46,8 +46,8 @@ En la columna Estado anotamos si el requerimiento ya está hecho en `main`: "Sí
 | RF-38 | Administración | El sistema debe permitir al administrador gestionar usuarios (banear, desbanear, editar y cambiar el rol). | No: existe la plantilla `moderacion/usuarios.html`, pero no hay ruta |
 | RF-39 | Administración | El sistema debe permitir al administrador gestionar los foros (crear, editar y eliminar). | No: los foros solo se crean con los datos de demostración |
 | RF-40 | Notificaciones | El sistema debe generar notificaciones por eventos relevantes (seguidores nuevos, reacciones, comentarios, respuestas en foros, eventos, mensajes y reportes). | Parcial: se guarda una notificación cuando alguien te sigue o comenta tu publicación (no cuando es tu propio comentario). Faltan reacciones, respuestas en foros, eventos, mensajes y reportes |
-| RF-41 | Notificaciones | El sistema debe permitir consultar las notificaciones y marcarlas como leídas. | Sí: al abrir `/notificaciones` se marcan todas como leídas; no hay marcar una sola |
-| RF-42 | Notificaciones | El sistema debe permitir eliminar notificaciones. | No |
+| RF-41 | Notificaciones | El sistema debe permitir consultar las notificaciones y marcarlas como leídas. | Sí: en `/notificaciones` se marca una sola (botón ✓ o al abrirla) o todas a la vez; abrir la página ya no las marca |
+| RF-42 | Notificaciones | El sistema debe permitir eliminar notificaciones. | Sí: botón ✕ en cada notificación de `/notificaciones` |
 | RF-43 | Mensajería | El sistema debe permitir consultar las conversaciones, con el contador de no leídos, y archivarlas. | Sí |
 | RF-44 | Mensajería | El sistema debe permitir enviar y recibir mensajes privados en tiempo real. | Sí: usa Socket.IO |
 

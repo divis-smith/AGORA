@@ -69,6 +69,30 @@ sequenceDiagram
     R-->>M: "Reporte #N resuelto"
 ```
 
+## Marcar como leída y eliminar una notificación (RF-41 y RF-42): `POST /notificaciones/<id>/leida` y `POST /notificaciones/<id>/eliminar`
+
+Abrir `/notificaciones` ya no marca todo como leído. En cada notificación, el botón ✓ (o pulsar la notificación) la marca como leída y el botón ✕ la elimina. «Marcar todas como leídas» llama a `POST /notificaciones/leer-todas`. En los tres casos la respuesta trae el nuevo total de no leídas para el contador del menú.
+
+```mermaid
+sequenceDiagram
+    actor E as Estudiante
+    participant R as rutas/social.py
+    participant S as servicios/social.py
+    participant DB as SQLite (notificaciones)
+
+    E->>R: POST /notificaciones/<id>/leida (o /eliminar)
+    R->>S: marcar_notificacion_leida(usuario_id, id) o eliminar_notificacion(usuario_id, id)
+    S->>DB: UPDATE (o DELETE) ... WHERE id = ? AND usuario_id = ?
+    alt no existe o es de otro usuario (0 filas)
+        R-->>E: 404 "La notificación no existe."
+    else es del usuario
+        R->>S: contar_notificaciones_no_leidas(usuario_id)
+        S->>DB: SELECT COUNT(*) ... WHERE usuario_id = ? AND leida = 0
+        R-->>E: ok y no_leidas
+        E->>E: actualiza la tarjeta y el contador del menú
+    end
+```
+
 ## Inscribirse a un evento (RF-30): `POST /eventos/<id>/inscribir`
 
 ```mermaid

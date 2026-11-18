@@ -61,8 +61,10 @@
     setTimeout(() => t.remove(), 4000);
   }
 
-  /* Limpiar badge de notifics al entrar a /notificaciones */
-  if (window.location.pathname === '/notificaciones') setBadgeNotif(0);
+  /* La página de notificaciones avisa el nuevo total al marcar o eliminar una */
+  window.addEventListener('notificaciones:no-leidas', function (e) {
+    setBadgeNotif(e.detail);
+  });
 
   /* Limpiar badge de mensajes al entrar a /mensajes o /mensajes/* */
   if (window.location.pathname.startsWith('/mensajes')) setBadgeMsgs(0);
