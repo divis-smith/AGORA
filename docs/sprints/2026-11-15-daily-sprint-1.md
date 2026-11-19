@@ -3,7 +3,7 @@
 | | |
 | --- | --- |
 | Ceremonia | Daily (acta semanal, una fila por día) |
-| Fecha y hora | Semana del 2026-11-15 al 2026-11-20, todos los días de trabajo a las 5:30 p. m. (15 minutos) |
+| Fecha y hora | Semana del 2026-11-15 al 2026-11-17, todos los días de trabajo a las 5:30 p. m. (15 minutos) |
 | Lugar o medio | Meet |
 | Scrum Master | José David Vergara Zapata |
 | Product Owner | Divis Smith Ramírez |
@@ -16,7 +16,7 @@
 | --- | --- | --- | --- | --- |
 | Dom 2026-11-15 | Todos | Johan: terminó #6 (PR #13 fusionado). Michael: estudiando #9. Carlos: analizando #10. José David: preparando #7. | Michael y José David crean su rama y empiezan; Carlos sigue con el análisis; Johan espera nuevas asignaciones | Ninguno |
 | Lun 2026-11-16 | Todos | Johan: analizando el proyecto a fondo. Michael: terminó #9 y abrió el PR en borrador. Carlos: terminó #10. José David: creó su rama y desarrolla #7. | Johan espera nuevas asignaciones; Michael y Carlos esperan la revisión de sus PR; José David sigue con #7 | Carlos: conflicto en la fusión de su PR |
-| Mar 2026-11-17 | | | | |
+| Mar 2026-11-17 | no hubo daily | se cerraron todos los issues del sprint | iniciar sprint 2 | reunion presencial de sprint review con el profesor |
 | Mié 2026-11-18 | | | | |
 | Jue 2026-11-19 | | | | |
 | Vie 2026-11-20 | | | | |
@@ -37,12 +37,16 @@ Si un día no hubo Daily, se deja la fila con "No hubo Daily" y el motivo.
 - **Carlos Enrique Lizarazo (#10):** terminó el Issue. Las notificaciones funcionan: cada una se puede marcar como leída, se pueden marcar todas como leídas y se pueden borrar. Hizo las pruebas. Sin impedimentos graves, solo un conflicto en la fusión.
 - **José David Vergara Zapata (#7):** creó su rama, analizó qué archivos modifica y está desarrollando la pantalla. Sin problemas.
 
+### Detalle de la Daily del 2026-11-17
+
+-no hubo Daily. Se cerraron todos los issues del sprint y se pronostico el inicio del sprint 2. Se hizo la reunión presencial de Sprint Review con el profesor.
+
 ## Issues revisados
 
 - #6, Reportar una publicación, Done
-- #7, Consultar el estado de mis reportes, In Progress
-- #9, Notificar cuando comentan mi publicación, In Review
-- #10, Marcar una notificación como leída y eliminarla, In Review
+- #7, Consultar el estado de mis reportes, Done
+- #9, Notificar cuando comentan mi publicación, Done
+- #10, Marcar una notificación como leída y eliminarla, Done
 
 ## Acuerdos y decisiones
 
