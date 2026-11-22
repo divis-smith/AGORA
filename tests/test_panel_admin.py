@@ -165,6 +165,28 @@ class OtrosRolesNoEntran(PanelBase):
         self.assertIn('/login', respuesta.headers['Location'])
 
 
+class MenuLateral(PanelBase):
+    """El enlace "Administración" solo aparece para quien puede entrar."""
+
+    def menu_de(self, user_id):
+        return self.cliente(user_id).get('/reportes').get_data(as_text=True)
+
+    def test_el_admin_ve_administracion_y_moderacion(self):
+        html = self.menu_de(ADMIN)
+        self.assertIn('href="/admin"', html)
+        self.assertIn('href="/moderacion"', html)
+
+    def test_el_moderador_ve_moderacion_pero_no_administracion(self):
+        html = self.menu_de(MODERADOR)
+        self.assertNotIn('href="/admin"', html)
+        self.assertIn('href="/moderacion"', html)
+
+    def test_el_estudiante_no_ve_ninguno(self):
+        html = self.menu_de(ESTUDIANTE)
+        self.assertNotIn('href="/admin"', html)
+        self.assertNotIn('href="/moderacion"', html)
+
+
 class TotalesDelPanel(PanelBase):
     """El servicio solo cuenta lo que el panel promete mostrar."""
 
