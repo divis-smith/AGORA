@@ -12,7 +12,7 @@ async function aplaudir(proyId) {
 
     // Actualizar UI
     num.textContent  = data.total;
-    btn.classList.toggle('activo', data.accion === 'aplaudido');
+    btn.classList.toggle('activo', data.activo);
   } catch (e) {
     console.error('Error al aplaudir:', e);
   }

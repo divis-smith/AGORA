@@ -99,6 +99,50 @@ class DetalleProyectoTest(unittest.TestCase):
         self.assertEqual(respuesta.status_code, 302)
         self.assertIn('/login', respuesta.headers['Location'])
 
+    def test_el_detalle_muestra_todos_los_datos_del_proyecto(self):
+        respuesta = self.client.get('/portafolio/1')
+        html = respuesta.get_data(as_text=True)
+        self.assertEqual(respuesta.status_code, 200)
+        for esperado in ('Mi app', 'Luis', 'Una app', 'Flask', 'SQLite', 'Completado',
+                         'https://github.com/luis/app', 'https://app.test',
+                         '0</span> aplausos', 'Muy buen trabajo'):
+            self.assertIn(esperado, html)
+
+    def test_el_detalle_no_ofrece_reportar_proyectos(self):
+        html = self.client.get('/portafolio/1').get_data(as_text=True)
+        self.assertNotIn('Reportar', html)
+
+    def test_el_detalle_funciona_sin_descripcion_ni_enlaces(self):
+        conn = agora.get_db()
+        conn.execute("INSERT INTO proyectos (autor_id, titulo) VALUES (2, 'Solo titulo')")
+        conn.commit()
+        conn.close()
+        respuesta = self.client.get('/portafolio/2')
+        self.assertEqual(respuesta.status_code, 200)
+        html = respuesta.get_data(as_text=True)
+        self.assertIn('Solo titulo', html)
+        self.assertNotIn('None', html)
+        self.assertIn('Aún no hay comentarios.', html)
+
+    def test_aplaudir_desde_el_detalle_sube_el_contador_y_marca_el_boton(self):
+        antes = self.client.get('/portafolio/1').get_data(as_text=True)
+        self.assertNotIn('btn-aplaudir activo', antes)
+        respuesta = self.client.post('/portafolio/1/aplaudir')
+        self.assertEqual(respuesta.get_json(), {'ok': True, 'activo': True, 'total': 1})
+        despues = self.client.get('/portafolio/1').get_data(as_text=True)
+        self.assertIn('btn-aplaudir activo', despues)
+        self.assertIn('1</span> aplauso', despues)
+
+    def test_el_portafolio_enlaza_cada_titulo_al_detalle(self):
+        html = self.client.get('/portafolio').get_data(as_text=True)
+        self.assertIn('href="/portafolio/1"', html)
+
+    def test_el_script_del_detalle_usa_el_campo_activo_de_la_respuesta(self):
+        ruta = RAIZ / 'frontend' / 'static' / 'js' / 'portafolio' / 'ver_proyecto.js'
+        js = ruta.read_text(encoding='utf-8')
+        self.assertIn('data.activo', js)
+        self.assertNotIn('data.accion', js)
+
 
 if __name__ == '__main__':
     unittest.main()
