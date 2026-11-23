@@ -17,7 +17,7 @@
 | Mié 2026-11-18 | no hubo daily | | | |
 | jue 2026-11-19 | no hubo daily | | | |
 | vie 2026-11-20 | no hubo daily | | | |
-| sáb 2026-11-21 | | | | |
+| sáb 2026-11-21 | todos | johan se encuentra analizando los issues que le asignaron, asi mismo jose david, lizarazo y michael se encuentran analizando sus respectivos issues. | crear la rama correspondiente al desarrollo del issue y comenzar el desarrollo del mismo. | ninguno |
 | dom 2026-11-22 | | | | |
 | lun 2026-11-23 | | | | |
 | mar 2026-11-24 | | | | |
@@ -36,7 +36,16 @@ no hubo daily ya que se realizo el sprint planning y se definieron los issues a 
 
 no hubo daily literalmente ya que se encontraban analizando el pull request y analizando el acta de sprint planning para asi confirmar que todo se encontrara correcto, asi mismo aun no se iniciaba el desarrollo de los issues por parte del equipo de desarrollo, es por eso que en teoria no hubo daily, sin embargo el equipo de desarrollo ya se encontraba analizando los issues que les fueron asignados para asi poder iniciar el desarrollo de los mismos al dia siguiente.
 
+### detalles de la Daily Sáb 2026-11-21
+
+- **Johan Andrés Vallecilla:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos, elijio el issue [#41](https://github.com/divis-smith/AGORA/issues/41) como el primero a desarrollar, sin embargo sabe que hay una prioridad de desarrollo de ciertos issues por encima de otros.
+- **Carlos Enrique Lizarazo:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos.
+- **Michael Stivens Calderón Ulloa:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos, los hara por prioridad.
+- **José David Vergara Zapata:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos.
+
 ## Issues revisados
+
+-todos del sprint backlog del sprint 2.
 
 ## Acuerdos y decisiones
 
