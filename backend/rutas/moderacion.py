@@ -2,8 +2,7 @@
 
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, session, url_for
 
-from backend.rutas.decoradores import crear_moderador_required, login_required
-from backend.servicios import cuentas
+from backend.rutas.decoradores import crear_admin_required, crear_moderador_required, login_required
 from backend.servicios import moderacion as servicio
 
 
@@ -11,6 +10,7 @@ def crear_blueprint(get_db):
     """Crea el Blueprint de moderación."""
     blueprint = Blueprint('moderacion', __name__)
     moderador_required = crear_moderador_required(get_db)
+    admin_required = crear_admin_required(get_db)
 
     @blueprint.route('/moderacion')
     @login_required
@@ -102,15 +102,11 @@ def crear_blueprint(get_db):
 
     @blueprint.route('/admin')
     @login_required
+    @admin_required
     def admin_panel():
         conn = get_db()
-        usuario = cuentas.obtener_rol(conn, session['user_id'])
-        if not usuario or usuario['rol'] not in ('admin', 'moderador'):
-            conn.close()
-            flash('Acceso denegado.', 'error')
-            return redirect(url_for('publicaciones.feed'))
-        totales = servicio.totales_panel(conn)
+        stats = servicio.totales_panel(conn)
         conn.close()
-        return render_template('moderacion/panel.html', **totales, pagina_activa='admin')
+        return render_template('moderacion/panel.html', stats=stats, pagina_activa='admin')
 
     return blueprint
