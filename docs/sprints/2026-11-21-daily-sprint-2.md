@@ -15,7 +15,7 @@
 | Día | Asistentes | Qué hizo cada uno | Qué sigue | Impedimentos |
 | --- | --- | --- | --- | --- |
 | Mié 2026-11-18 | no hubo daily | | | |
-| jue 2026-11-19 | | | | |
+| jue 2026-11-19 | no hubo daily | | | |
 | vie 2026-11-20 | | | | |
 | sáb 2026-11-21 | | | | |
 | dom 2026-11-22 | | | | |
@@ -27,6 +27,10 @@ Si un día no hubo Daily, se deja la fila con "No hubo Daily" y el motivo abajo 
 ### detalles de la Daily Mié 2026-11-18
 
 No hubo Daily ya que ese dia se hizo la sprint retrospectiva y asi mismo se confirmo que el sprint planing seria el jueves 2026-11-19.
+
+### detalles de la Daily Jue 2026-11-19
+
+no hubo daily ya que se realizo el sprint planning y se definieron los issues a desarrollar en el sprint, asi mismo se definio el objetivo del sprint y se definieron los criterios de terminado de cada issue.
 
 ## Issues revisados
 
