@@ -382,7 +382,7 @@ class PantallaDeMisReportes(ModeracionBase):
         contenido = respuesta.get_data(as_text=True)
 
         self.assertIn('href="/reportes"', contenido)
-        self.assertIn('Mis reportes', contenido)
+        self.assertIn('Mis Reportes', contenido)
 
 if __name__ == '__main__':
     unittest.main()
