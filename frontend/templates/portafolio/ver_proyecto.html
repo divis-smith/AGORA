@@ -51,16 +51,18 @@
     </div>
 
     <!-- Descripción -->
-    <div class="vp-descripcion">{{ proyecto.descripcion }}</div>
+    {% if proyecto.descripcion %}
+      <div class="vp-descripcion">{{ proyecto.descripcion }}</div>
+    {% endif %}
 
     <!-- Info adicional -->
     <div class="vp-info-grid">
-      {% if proyecto.repositorio %}
+      {% if proyecto.repo_url %}
         <div class="vp-info-card">
           <div class="vp-info-label">Repositorio</div>
           <div class="vp-info-valor">
-            <a href="{{ proyecto.repositorio }}" target="_blank" rel="noopener">
-              {{ proyecto.repositorio }}
+            <a href="{{ proyecto.repo_url }}" target="_blank" rel="noopener">
+              {{ proyecto.repo_url }}
             </a>
           </div>
         </div>
@@ -78,7 +80,7 @@
       {% if proyecto.estado %}
         <div class="vp-info-card">
           <div class="vp-info-label">Estado</div>
-          <div class="vp-info-valor">{{ proyecto.estado }}</div>
+          <div class="vp-info-valor">{{ proyecto.estado | replace('_', ' ') | capitalize }}</div>
         </div>
       {% endif %}
     </div>
@@ -90,15 +92,8 @@
         ★ Aplaudir
       </button>
       <span class="aplausos-count" id="aplausos-count">
-        <span id="num-aplausos">{{ proyecto.total_aplausos }}</span> aplauso{{ 's' if proyecto.total_aplausos != 1 else '' }}
+        <span id="num-aplausos">{{ proyecto.total_aplausos }}</span> <span id="palabra-aplausos">{{ 'aplauso' if proyecto.total_aplausos == 1 else 'aplausos' }}</span>
       </span>
-
-      <!-- Botón reportar (sólo si no es el propio autor) -->
-      {% if session.user_id != proyecto.autor_id %}
-        <a class="proyecto-reportar" href="{{ url_for('reportar_publicacion', post_id=proyecto.id) }}">
-          ⚑ Reportar
-        </a>
-      {% endif %}
     </div>
 
     <!-- Comentarios -->
@@ -118,22 +113,8 @@
         </div>
       {% endfor %}
     {% else %}
-      <div class="com-vacio">Sé el primero en comentar este proyecto.</div>
+      <div class="com-vacio">Aún no hay comentarios.</div>
     {% endif %}
-
-    <!-- Nuevo comentario -->
-    <div class="vp-nuevo-com">
-      <label>Añadir comentario</label>
-      <form method="POST" action="{{ url_for('comentar_proyecto', proy_id=proyecto.id) }}">
-        <textarea name="contenido"
-                  placeholder="¿Qué te parece este proyecto? Deja tu retroalimentación…"
-                  maxlength="1000"
-                  required></textarea>
-        <div class="vp-com-footer">
-          <button type="submit" class="btn-primary">Comentar →</button>
-        </div>
-      </form>
-    </div>
 
   </main>
 </div>
