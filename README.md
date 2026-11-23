@@ -6,7 +6,7 @@
 
 Hay tres roles: estudiante, moderador y administrador.
 
-**Estudiantes.** Crean una cuenta y entran con correo y contraseña. En el feed publican (con imagen opcional, de forma anónima si quieren), reaccionan, comentan y filtran por categoría. En los foros hacen preguntas, responden, votan las respuestas y marcan la correcta. Arman su portafolio de proyectos, siguen a otros estudiantes, buscan publicaciones, personas y foros desde Explorar, y consultan las tendencias. Crean eventos, se inscriben (con control de cupos) y ven los participantes. Se escriben mensajes privados en tiempo real, reciben notificaciones (y las marcan como leídas o las eliminan), editan su perfil, su correo y su contraseña, y tienen una sección de ayuda.
+**Estudiantes.** Crean una cuenta y entran con correo y contraseña. En el feed publican (con imagen opcional, de forma anónima si quieren), reaccionan, comentan y filtran por categoría. En los foros hacen preguntas, responden, votan las respuestas y marcan la correcta. Arman su portafolio de proyectos y abren el detalle de cada uno, siguen a otros estudiantes, buscan publicaciones, personas y foros desde Explorar, y consultan las tendencias. Crean eventos, se inscriben (con control de cupos) y ven los participantes. Se escriben mensajes privados en tiempo real, reciben notificaciones (y las marcan como leídas o las eliminan), editan su perfil, su correo y su contraseña, y tienen una sección de ayuda.
 
 **Moderadores.** Revisan los reportes abiertos y los resuelven: ignorarlos, eliminar el contenido o suspender al usuario. Una cuenta suspendida pierde su sesión y no puede volver a entrar.
 
