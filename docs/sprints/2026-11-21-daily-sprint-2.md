@@ -16,7 +16,7 @@
 | --- | --- | --- | --- | --- |
 | Mié 2026-11-18 | no hubo daily | | | |
 | jue 2026-11-19 | no hubo daily | | | |
-| vie 2026-11-20 | | | | |
+| vie 2026-11-20 | no hubo daily | | | |
 | sáb 2026-11-21 | | | | |
 | dom 2026-11-22 | | | | |
 | lun 2026-11-23 | | | | |
@@ -31,6 +31,10 @@ No hubo Daily ya que ese dia se hizo la sprint retrospectiva y asi mismo se conf
 ### detalles de la Daily Jue 2026-11-19
 
 no hubo daily ya que se realizo el sprint planning y se definieron los issues a desarrollar en el sprint, asi mismo se definio el objetivo del sprint y se definieron los criterios de terminado de cada issue.
+
+### detalles de la Daily Vie 2026-11-20
+
+no hubo daily literalmente ya que se encontraban analizando el pull request y analizando el acta de sprint planning para asi confirmar que todo se encontrara correcto, asi mismo aun no se iniciaba el desarrollo de los issues por parte del equipo de desarrollo, es por eso que en teoria no hubo daily, sin embargo el equipo de desarrollo ya se encontraba analizando los issues que les fueron asignados para asi poder iniciar el desarrollo de los mismos al dia siguiente.
 
 ## Issues revisados
 
