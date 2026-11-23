@@ -374,5 +374,15 @@ class PantallaDeMisReportes(ModeracionBase):
         self.assertIn('Sin reportes', contenido)
         self.assertIn('No has enviado ningún reporte aún.', contenido)
 
+
+    def test_muestra_enlace_a_mis_reportes_en_el_menu(self):
+        respuesta = self.html()
+
+        self.assertEqual(respuesta.status_code, 200)
+        contenido = respuesta.get_data(as_text=True)
+
+        self.assertIn('href="/reportes"', contenido)
+        self.assertIn('Mis reportes', contenido)
+
 if __name__ == '__main__':
     unittest.main()
