@@ -47,7 +47,7 @@ no hubo daily literalmente ya que se encontraban analizando el pull request y an
 
 - **Johan Andrés Vallecilla:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos, elijio el issue [#41](https://github.com/divis-smith/AGORA/issues/41).
 - **Carlos Enrique Lizarazo:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos por prioridad.
-- **Michael Stivens Calderón Ulloa:** se encuentra analizando el issue [#18](https://github.com/divis-smith/AGORA/issues/18) para posteriormente crar la rama y empezar el desarrollo del mismo, para luego pasar al issue #19
+- **Michael Stivens Calderón Ulloa:** creo la rana correspondiente al issue [#18](https://github.com/divis-smith/AGORA/issues/18), movio el issue a "in progress", avanza con el desarrollo y publicacion de commits, inicio el desarrollo de las pruebas, para posteriormente subir la rama.
 - **José David Vergara Zapata:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos por prioridad.
 
 ## Issues revisados
