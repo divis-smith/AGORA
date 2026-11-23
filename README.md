@@ -10,9 +10,9 @@ Hay tres roles: estudiante, moderador y administrador.
 
 **Moderadores.** Revisan los reportes abiertos y los resuelven: ignorarlos, eliminar el contenido o suspender al usuario. Una cuenta suspendida pierde su sesión y no puede volver a entrar.
 
-**Administradores.** Hoy tienen los mismos permisos que los moderadores (también pueden eliminar cualquier evento). Su panel de administración todavía no funciona.
+**Administradores.** Tienen los mismos permisos que los moderadores (también pueden eliminar cualquier evento) y, solo ellos, un panel de administración en `/admin` con los totales de la plataforma (usuarios activos, publicaciones, eventos próximos y reportes nuevos).
 
-Falta por hacer, entre otras cosas: verificar la cuenta y recuperar la contraseña, hashtags y visibilidad de las publicaciones, las preferencias de privacidad y apariencia, la gestión de usuarios y foros desde el panel de administración, y la interfaz para reportar comentarios y usuarios (las publicaciones ya se pueden reportar). Hoy `/admin` responde con error. Todo eso está en el [backlog inicial](docs/backlog-inicial.md) y el estado de cada requerimiento en [`docs/requerimientos/`](docs/requerimientos/funcionales.md).
+Falta por hacer, entre otras cosas: verificar la cuenta y recuperar la contraseña, hashtags y visibilidad de las publicaciones, las preferencias de privacidad y apariencia, la gestión de usuarios y foros desde el panel de administración, y la interfaz para reportar comentarios y usuarios (las publicaciones ya se pueden reportar). Todo eso está en el [backlog inicial](docs/backlog-inicial.md) y el estado de cada requerimiento en [`docs/requerimientos/`](docs/requerimientos/funcionales.md).
 
 ## Con qué está hecho
 
@@ -85,7 +85,7 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 python -m unittest discover -s tests -v
 ```
 
-Son 98 pruebas. Cubren reportes, suspensión de cuentas, ajustes de cuenta, subida de imágenes, notificaciones por comentarios y marcar y eliminar notificaciones; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
+Son 112 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, ajustes de cuenta, subida de imágenes, notificaciones por comentarios y marcar y eliminar notificaciones; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
 ## Estructura del proyecto
 
 ```
