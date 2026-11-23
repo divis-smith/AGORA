@@ -82,3 +82,30 @@ def alternar_aplauso(conn, proyecto_id, usuario_id):
         "SELECT COUNT(*) AS total FROM aplausos_proyecto WHERE proyecto_id = ?", (proyecto_id,)
     ).fetchone()['total']
     return activo, total
+
+
+def obtener_detalle(conn, proyecto_id, usuario_id):
+    """Devuelve el proyecto con su autor y aplausos, o None si no existe."""
+    fila = conn.execute("""
+        SELECT p.*, u.nombre AS nombre_autor, u.carrera AS carrera_autor,
+               (SELECT COUNT(*) FROM aplausos_proyecto a WHERE a.proyecto_id = p.id) AS total_aplausos,
+               (SELECT 1 FROM aplausos_proyecto a WHERE a.proyecto_id = p.id AND a.usuario_id = ?) AS ya_aplaudi
+        FROM proyectos p JOIN usuarios u ON u.id = p.autor_id
+        WHERE p.id = ?
+    """, (usuario_id, proyecto_id)).fetchone()
+    if fila is None:
+        return None
+    proyecto = dict(fila)
+    proyecto['tecnologias_lista'] = parsear_tecnologias(proyecto.get('tecnologias'))
+    return proyecto
+
+
+def listar_comentarios(conn, proyecto_id):
+    """Devuelve los comentarios del proyecto, del más antiguo al más reciente."""
+    filas = conn.execute("""
+        SELECT c.*, u.nombre AS nombre_autor
+        FROM comentarios_proyecto c JOIN usuarios u ON u.id = c.autor_id
+        WHERE c.proyecto_id = ?
+        ORDER BY c.creado_en, c.id
+    """, (proyecto_id,)).fetchall()
+    return [dict(fila) for fila in filas]
