@@ -70,6 +70,14 @@
         </a>
       {% endif %}
 
+      {#- Solo oculta el enlace; el permiso real lo revisa admin_required en el servidor. #}
+      {% if session.rol == 'admin' %}
+        <a class="nav-item {% if pagina_activa == 'admin' %}active{% endif %}"
+           href="{{ url_for('moderacion.admin_panel') }}">
+          <span class="nav-icon">⚙</span> Administración
+        </a>
+      {% endif %}
+
     </nav>
   </div>
 
