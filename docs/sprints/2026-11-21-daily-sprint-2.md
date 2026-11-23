@@ -18,7 +18,7 @@
 | jue 2026-11-19 | no hubo daily | | | |
 | vie 2026-11-20 | no hubo daily | | | |
 | sáb 2026-11-21 | todos | johan se encuentra analizando los issues que le asignaron, asi mismo jose david, lizarazo y michael se encuentran analizando sus respectivos issues. | crear la rama correspondiente al desarrollo del issue y comenzar el desarrollo del mismo. | ninguno |
-| dom 2026-11-22 | | | | |
+| dom 2026-11-22 | todos | michael se encuentra analizando el issue [#18](https://github.com/divis-smith/AGORA/issues/18), johan iniciara el desarrollo despues de analizar sus issues. jose y lizarazo iniciaran a desarrollar sus respectivos issues. | crear la rama correspondiente al desarrollo del issue y comenzar el desarrollo del mismo. | |
 | lun 2026-11-23 | | | | |
 | mar 2026-11-24 | | | | |
 
@@ -42,6 +42,13 @@ no hubo daily literalmente ya que se encontraban analizando el pull request y an
 - **Carlos Enrique Lizarazo:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos.
 - **Michael Stivens Calderón Ulloa:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos, los hara por prioridad.
 - **José David Vergara Zapata:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos.
+
+### deatalles de la Daily Dom 2026-11-22
+
+- **Johan Andrés Vallecilla:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos, elijio el issue [#41](https://github.com/divis-smith/AGORA/issues/41).
+- **Carlos Enrique Lizarazo:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos por prioridad.
+- **Michael Stivens Calderón Ulloa:** se encuentra analizando el issue [#18](https://github.com/divis-smith/AGORA/issues/18) para posteriormente crar la rama y empezar el desarrollo del mismo, para luego pasar al issue #19
+- **José David Vergara Zapata:** se encuentra analizando los issues que le fueron asignados para asi poder iniciar el desarrollo de los mismos por prioridad.
 
 ## Issues revisados
 
