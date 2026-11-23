@@ -105,7 +105,7 @@ class DetalleProyectoTest(unittest.TestCase):
         self.assertEqual(respuesta.status_code, 200)
         for esperado in ('Mi app', 'Luis', 'Una app', 'Flask', 'SQLite', 'Completado',
                          'https://github.com/luis/app', 'https://app.test',
-                         '0</span> aplausos', 'Muy buen trabajo'):
+                         '0</span> <span id="palabra-aplausos">aplausos</span>', 'Muy buen trabajo'):
             self.assertIn(esperado, html)
 
     def test_el_detalle_no_ofrece_reportar_proyectos(self):
@@ -131,7 +131,7 @@ class DetalleProyectoTest(unittest.TestCase):
         self.assertEqual(respuesta.get_json(), {'ok': True, 'activo': True, 'total': 1})
         despues = self.client.get('/portafolio/1').get_data(as_text=True)
         self.assertIn('btn-aplaudir activo', despues)
-        self.assertIn('1</span> aplauso', despues)
+        self.assertIn('1</span> <span id="palabra-aplausos">aplauso</span>', despues)
 
     def test_el_portafolio_enlaza_cada_titulo_al_detalle(self):
         html = self.client.get('/portafolio').get_data(as_text=True)
@@ -141,6 +141,7 @@ class DetalleProyectoTest(unittest.TestCase):
         ruta = RAIZ / 'frontend' / 'static' / 'js' / 'portafolio' / 'ver_proyecto.js'
         js = ruta.read_text(encoding='utf-8')
         self.assertIn('data.activo', js)
+        self.assertIn('palabra-aplausos', js)
         self.assertNotIn('data.accion', js)
 
 

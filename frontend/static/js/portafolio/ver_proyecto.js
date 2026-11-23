@@ -1,6 +1,7 @@
 async function aplaudir(proyId) {
   const btn = document.getElementById('btn-aplaudir');
   const num = document.getElementById('num-aplausos');
+  const palabra = document.getElementById('palabra-aplausos');
 
   try {
     const res  = await fetch(`/portafolio/${proyId}/aplaudir`, {
@@ -12,6 +13,7 @@ async function aplaudir(proyId) {
 
     // Actualizar UI
     num.textContent  = data.total;
+    palabra.textContent = data.total === 1 ? 'aplauso' : 'aplausos';
     btn.classList.toggle('activo', data.activo);
   } catch (e) {
     console.error('Error al aplaudir:', e);

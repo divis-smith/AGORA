@@ -92,7 +92,7 @@
         ★ Aplaudir
       </button>
       <span class="aplausos-count" id="aplausos-count">
-        <span id="num-aplausos">{{ proyecto.total_aplausos }}</span> aplauso{{ 's' if proyecto.total_aplausos != 1 else '' }}
+        <span id="num-aplausos">{{ proyecto.total_aplausos }}</span> <span id="palabra-aplausos">{{ 'aplauso' if proyecto.total_aplausos == 1 else 'aplausos' }}</span>
       </span>
     </div>
 
