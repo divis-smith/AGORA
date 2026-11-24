@@ -21,6 +21,21 @@ def crear_blueprint(get_db):
         conn.close()
         return render_template('portafolio/lista.html', mis_proyectos=mis_proyectos, todos_proyectos=todos_proyectos)
 
+    @blueprint.route('/portafolio/<int:proy_id>')
+    @login_required
+    def ver_proyecto(proy_id):
+        conn = get_db()
+        try:
+            proyecto = servicio.obtener_detalle(conn, proy_id, session['user_id'])
+            comentarios = servicio.listar_comentarios(conn, proy_id) if proyecto else []
+        finally:
+            conn.close()
+        if proyecto is None:
+            flash('Proyecto no encontrado.', 'error')
+            return redirect(url_for('portafolio.portafolio'))
+        return render_template('portafolio/ver_proyecto.html', proyecto=proyecto,
+                               comentarios=comentarios, ya_aplaudi=bool(proyecto['ya_aplaudi']))
+
     @blueprint.route('/nuevo-proyecto', methods=['POST'])
     @login_required
     def nuevo_proyecto():

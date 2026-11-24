@@ -16,3 +16,8 @@ Característica: Estado de mis reportes
     Cuando abro la pantalla de mis reportes
     Entonces veo un mensaje que indica que no tengo reportes
     Y la pantalla no responde error
+
+  Escenario: Llegar a mis reportes desde el menú 
+    Dado que inicie seccion como estudiante
+    Cuando selecciono "Mis reportes" en el menú
+    Entonces soy dirigido a la pantala de mis reportes
