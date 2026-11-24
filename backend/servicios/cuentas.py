@@ -2,6 +2,8 @@
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
+ROLES = ('estudiante', 'moderador', 'admin')
+
 
 def obtener_por_id(conn, usuario_id):
     return conn.execute("SELECT * FROM usuarios WHERE id = ?", (usuario_id,)).fetchone()
@@ -54,6 +56,35 @@ def correo_en_uso(conn, correo, usuario_id):
 def actualizar_correo(conn, usuario_id, correo):
     conn.execute("UPDATE usuarios SET correo = ? WHERE id = ?", (correo, usuario_id))
     conn.commit()
+
+
+def buscar_usuarios(conn, texto):
+    """Lista los usuarios cuyo nombre o correo contiene `texto` (todos si está vacío).
+
+    `%` y `_` se escapan para que se busquen como texto y no como comodines de LIKE.
+    """
+    texto = (texto or '').strip()
+    escapado = texto.replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_')
+    patron = f'%{escapado}%'
+    return conn.execute(
+        """SELECT id, nombre, correo, rol, activo, creado_en FROM usuarios
+           WHERE nombre LIKE ? ESCAPE '\\' OR correo LIKE ? ESCAPE '\\'
+           ORDER BY nombre""",
+        (patron, patron),
+    ).fetchall()
+
+
+def cambiar_rol(conn, admin_id, usuario_id, rol):
+    """Cambia el rol de un usuario. Devuelve el mensaje de error, o None si lo cambió."""
+    if usuario_id == admin_id:
+        return 'No puedes cambiar tu propio rol.'
+    if rol not in ROLES:
+        return 'Rol no válido.'
+    if obtener_rol(conn, usuario_id) is None:
+        return 'El usuario no existe.'
+    conn.execute("UPDATE usuarios SET rol = ? WHERE id = ?", (rol, usuario_id))
+    conn.commit()
+    return None
 
 
 def actualizar_password(conn, usuario_id, password):
