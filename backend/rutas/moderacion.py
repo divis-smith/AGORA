@@ -3,6 +3,7 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, session, url_for
 
 from backend.rutas.decoradores import crear_admin_required, crear_moderador_required, login_required
+from backend.servicios import cuentas
 from backend.servicios import moderacion as servicio
 
 
@@ -108,5 +109,29 @@ def crear_blueprint(get_db):
         stats = servicio.totales_panel(conn)
         conn.close()
         return render_template('moderacion/panel.html', stats=stats, pagina_activa='admin')
+
+    @blueprint.route('/admin/usuarios')
+    @login_required
+    @admin_required
+    def admin_usuarios():
+        q = request.args.get('q', '').strip()
+        conn = get_db()
+        usuarios = cuentas.buscar_usuarios(conn, q)
+        conn.close()
+        return render_template('moderacion/usuarios.html', usuarios=usuarios, q=q,
+                               roles=cuentas.ROLES, pagina_activa='admin')
+
+    @blueprint.route('/admin/usuarios/<int:usuario_id>/rol', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_cambiar_rol(usuario_id):
+        conn = get_db()
+        error = cuentas.cambiar_rol(conn, session['user_id'], usuario_id, request.form.get('rol', ''))
+        conn.close()
+        if error:
+            flash(error, 'error')
+        else:
+            flash('Rol actualizado.', 'success')
+        return redirect(url_for('moderacion.admin_usuarios'))
 
     return blueprint

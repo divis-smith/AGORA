@@ -23,6 +23,7 @@
         </tr>
       </thead>
       <tbody>
+        {#- Suspender y reactivar cuentas desde esta tabla llega con el issue #20. #}
         {% for u in usuarios %}
           <tr>
             <td class="u-texto-tenue">#{{ u.id }}</td>
@@ -32,23 +33,24 @@
             <td><span class="{% if u.activo %}activo-si{% else %}activo-no{% endif %}">{{ '✓ Activo' if u.activo else '✕ Suspendido' }}</span></td>
             <td class="u-texto-tenue">{{ u.creado_en[:10] if u.creado_en else '—' }}</td>
             <td>
-              <div class="acc-form">
-                <!-- Cambiar rol -->
-                <form method="POST" action="{{ url_for('admin_cambiar_rol', uid=u.id) }}">
-                  <select name="rol">
-                    <option value="estudiante" {% if u.rol=='estudiante' %}selected{% endif %}>Estudiante</option>
-                    <option value="moderador" {% if u.rol=='moderador' %}selected{% endif %}>Moderador</option>
-                    <option value="admin" {% if u.rol=='admin' %}selected{% endif %}>Admin</option>
+              {% if u.id == session.user_id %}
+                <span class="u-texto-tenue">Tú</span>
+              {% else %}
+                <form class="acc-form" method="POST" action="{{ url_for('moderacion.admin_cambiar_rol', usuario_id=u.id) }}">
+                  <select name="rol" aria-label="Rol de {{ u.nombre }}">
+                    {% for rol in roles %}
+                      <option value="{{ rol }}" {% if u.rol == rol %}selected{% endif %}>{{ rol|capitalize }}</option>
+                    {% endfor %}
                   </select>
                   <button type="submit" class="acc-btn">Cambiar</button>
                 </form>
-                <!-- Toggle activo -->
-                {% if u.id != session.user_id %}
-                  <form method="POST" action="{{ url_for('admin_toggle_activo', uid=u.id) }}" data-confirmar="¿Cambiar estado de {{ u.nombre }}?">
-                    <button type="submit" class="acc-btn danger">{{ '⛔ Suspender' if u.activo else '✅ Activar' }}</button>
-                  </form>
-                {% endif %}
-              </div>
+              {% endif %}
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="7" class="u-texto-tenue">
+              {% if q %}Ningún usuario coincide con "{{ q }}".{% else %}No hay usuarios.{% endif %}
             </td>
           </tr>
         {% endfor %}
