@@ -4,6 +4,68 @@ from backend.nucleo.utilidades import con_tiempo_relativo, tiempo_relativo
 
 TIPOS_PREGUNTA = ('pregunta', 'duda', 'apuntes', 'recurso', 'debate')
 
+# (valor guardado, etiqueta) de las categorías que el administrador puede elegir.
+CATEGORIAS_FORO = (
+    ('campus', 'Campus'),
+    ('matematicas', 'Matemáticas'),
+    ('sistemas', 'Sistemas'),
+    ('academico', 'Académico'),
+    ('otro', 'Otro'),
+)
+MAX_NOMBRE_FORO = 80
+MAX_DESCRIPCION_FORO = 200
+
+
+def nombre_foro_en_uso(conn, nombre):
+    """Indica si ya hay un foro con ese nombre, sin distinguir mayúsculas.
+
+    Se compara en Python con casefold() porque el NOCASE de SQLite solo pasa a
+    minúsculas las letras ASCII: para él «CÁLCULO» y «Cálculo» serían distintos.
+    """
+    buscado = nombre.casefold()
+    return any(fila['nombre'].casefold() == buscado
+               for fila in conn.execute("SELECT nombre FROM foros"))
+
+
+def crear_foro(conn, nombre, descripcion, categoria, creado_por):
+    """Crea un foro. Devuelve el mensaje de error, o None si lo creó."""
+    nombre = (nombre or '').strip()
+    descripcion = (descripcion or '').strip()
+    if not nombre:
+        return 'El nombre del foro es obligatorio.'
+    if len(nombre) > MAX_NOMBRE_FORO:
+        return f'El nombre no puede tener más de {MAX_NOMBRE_FORO} caracteres.'
+    if len(descripcion) > MAX_DESCRIPCION_FORO:
+        return f'La descripción no puede tener más de {MAX_DESCRIPCION_FORO} caracteres.'
+    if categoria not in dict(CATEGORIAS_FORO):
+        return 'Categoría no válida.'
+    if nombre_foro_en_uso(conn, nombre):
+        return 'Ya existe un foro con ese nombre.'
+    conn.execute(
+        "INSERT INTO foros (nombre, descripcion, categoria, creado_por) VALUES (?, ?, ?, ?)",
+        (nombre, descripcion or None, categoria, creado_por),
+    )
+    conn.commit()
+    return None
+
+
+def eliminar_foro(conn, foro_id):
+    """Elimina el foro con sus preguntas, respuestas y votos. Devuelve False si no existía.
+
+    `abrir_conexion` no activa PRAGMA foreign_keys, así que el ON DELETE CASCADE
+    del esquema no se aplica: se borra de las tablas hijas a la tabla padre.
+    """
+    if obtener_foro(conn, foro_id) is None:
+        return False
+    preguntas = "SELECT id FROM preguntas_foro WHERE foro_id = ?"
+    respuestas = f"SELECT id FROM respuestas_foro WHERE pregunta_id IN ({preguntas})"
+    with conn:  # una sola transacción: o se borra todo o nada
+        conn.execute(f"DELETE FROM votos_respuesta WHERE respuesta_id IN ({respuestas})", (foro_id,))
+        conn.execute(f"DELETE FROM respuestas_foro WHERE pregunta_id IN ({preguntas})", (foro_id,))
+        conn.execute("DELETE FROM preguntas_foro WHERE foro_id = ?", (foro_id,))
+        conn.execute("DELETE FROM foros WHERE id = ?", (foro_id,))
+    return True
+
 
 def listar_foros(conn):
     filas = conn.execute("""
