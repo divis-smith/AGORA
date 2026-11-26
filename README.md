@@ -10,7 +10,7 @@ Hay tres roles: estudiante, moderador y administrador.
 
 **Moderadores.** Revisan los reportes abiertos y los resuelven: ignorarlos, eliminar el contenido o suspender al usuario. Una cuenta suspendida pierde su sesión y no puede volver a entrar.
 
-**Administradores.** Tienen los mismos permisos que los moderadores (también pueden eliminar cualquier evento) y, solo ellos, un panel de administración en `/admin` con los totales de la plataforma (usuarios activos, publicaciones, eventos próximos y reportes nuevos). Desde ahí entran a la gestión de usuarios, donde buscan por nombre o correo y cambian el rol de cualquiera menos el suyo.
+**Administradores.** Tienen los mismos permisos que los moderadores (también pueden eliminar cualquier evento) y, solo ellos, un panel de administración en `/admin` con los totales de la plataforma (usuarios activos, publicaciones, eventos próximos y reportes nuevos). Desde ahí entran a la gestión de usuarios, donde buscan por nombre o correo y cambian el rol de cualquiera menos el suyo, y a la gestión de foros, donde crean foros nuevos y eliminan los que sobran junto con sus preguntas y respuestas.
 
 Falta por hacer, entre otras cosas: verificar la cuenta y recuperar la contraseña, hashtags y visibilidad de las publicaciones, las preferencias de privacidad y apariencia, suspender, reactivar y editar usuarios y gestionar los foros desde el panel de administración, y la interfaz para reportar comentarios y usuarios (las publicaciones ya se pueden reportar). Todo eso está en el [backlog inicial](docs/backlog-inicial.md) y el estado de cada requerimiento en [`docs/requerimientos/`](docs/requerimientos/funcionales.md).
 
@@ -85,7 +85,7 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 python -m unittest discover -s tests -v
 ```
 
-Son 139 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, el detalle de proyectos del portafolio, ajustes de cuenta, subida de imágenes, notificaciones por comentarios y marcar y eliminar notificaciones; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
+Son 158 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, la gestión de foros, el detalle de proyectos del portafolio, ajustes de cuenta, subida de imágenes, notificaciones por comentarios y marcar y eliminar notificaciones; todavía no hay pruebas de registro, preguntas y respuestas de los foros, eventos, mensajes ni búsqueda.
 ## Estructura del proyecto
 
 ```
