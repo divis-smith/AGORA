@@ -24,10 +24,16 @@ def obtener_usuario_activo(conn, usuario_id):
     ).fetchone()
 
 
-def contar_publicaciones(conn, usuario_id):
+def _filtro_anonimas(incluir_anonimas):
+    """En el perfil que ven los demás no se muestran las publicaciones anónimas."""
+    return "" if incluir_anonimas else " AND p.es_anonimo = 0"
+
+
+def contar_publicaciones(conn, usuario_id, incluir_anonimas=True):
     return _contar(
         conn,
-        "SELECT COUNT(*) AS total FROM publicaciones WHERE autor_id = ? AND estado = 'publicado'",
+        "SELECT COUNT(*) AS total FROM publicaciones p "
+        "WHERE p.autor_id = ? AND p.estado = 'publicado'" + _filtro_anonimas(incluir_anonimas),
         (usuario_id,),
     )
 
@@ -49,13 +55,13 @@ def estadisticas_propias(conn, usuario_id):
     }
 
 
-def publicaciones_recientes(conn, usuario_id):
+def publicaciones_recientes(conn, usuario_id, incluir_anonimas=True):
     filas = conn.execute(f"""
         SELECT
             p.id, p.titulo, p.categoria, p.creado_en,
             {_SUBCONSULTAS_TOTALES}
         FROM publicaciones p
-        WHERE p.autor_id = ? AND p.estado = 'publicado'
+        WHERE p.autor_id = ? AND p.estado = 'publicado'{_filtro_anonimas(incluir_anonimas)}
         ORDER BY p.creado_en DESC
         LIMIT 10
     """, (usuario_id,)).fetchall()

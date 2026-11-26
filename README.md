@@ -85,7 +85,7 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 python -m unittest discover -s tests -v
 ```
 
-Son 170 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, la gestión de foros, el detalle de proyectos del portafolio, los comentarios en proyectos, ajustes de cuenta, subida de imágenes, notificaciones por comentarios y marcar y eliminar notificaciones; todavía no hay pruebas de registro, preguntas y respuestas de los foros, eventos, mensajes ni búsqueda.
+Son 174 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, la gestión de foros, el detalle de proyectos del portafolio, los comentarios en proyectos, ajustes de cuenta, subida de imágenes, notificaciones por comentarios, marcar y eliminar notificaciones y que el perfil público no muestre publicaciones anónimas; todavía no hay pruebas de registro, preguntas y respuestas de los foros, eventos, mensajes ni búsqueda.
 ## Estructura del proyecto
 
 ```
