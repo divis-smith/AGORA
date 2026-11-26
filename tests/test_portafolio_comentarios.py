@@ -117,6 +117,20 @@ class ComentarProyectoTest(unittest.TestCase):
             servicio.comentar(conn, 999, 1, 'Hola')
         conn.close()
 
+    def test_el_detalle_ofrece_el_formulario_para_comentar(self):
+        html = self.client.get('/portafolio/1').get_data(as_text=True)
+        self.assertIn('action="/portafolio/1/comentar"', html)
+        self.assertIn('name="contenido"', html)
+        self.assertIn('maxlength="1000"', html)
+        self.assertIn('id="comentarios"', html)
+
+    def test_el_comentario_publicado_se_ve_en_el_detalle_y_cuenta_en_el_titulo(self):
+        self._comentar('Primer comentario')
+        self._comentar('Segundo comentario')
+        html = self.client.get('/portafolio/1').get_data(as_text=True)
+        self.assertIn('Comentarios (2)', html)
+        self.assertLess(html.index('Primer comentario'), html.index('Segundo comentario'))
+
 
 if __name__ == '__main__':
     unittest.main()

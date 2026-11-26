@@ -97,7 +97,7 @@
     </div>
 
     <!-- Comentarios -->
-    <div class="vp-seccion-titulo">
+    <div class="vp-seccion-titulo" id="comentarios">
       Comentarios ({{ comentarios|length }})
     </div>
 
@@ -115,6 +115,20 @@
     {% else %}
       <div class="com-vacio">Aún no hay comentarios.</div>
     {% endif %}
+
+    <!-- Nuevo comentario -->
+    <div class="vp-nuevo-com">
+      <label for="contenido-comentario">Añadir comentario</label>
+      <form method="POST" action="{{ url_for('portafolio.comentar_proyecto', proy_id=proyecto.id) }}">
+        <textarea id="contenido-comentario" name="contenido"
+                  placeholder="¿Qué te parece este proyecto? Deja tu retroalimentación…"
+                  maxlength="1000"
+                  required></textarea>
+        <div class="vp-com-footer">
+          <button type="submit" class="btn-primary">Comentar →</button>
+        </div>
+      </form>
+    </div>
 
   </main>
 </div>
