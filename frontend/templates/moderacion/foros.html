@@ -22,11 +22,9 @@
           <div class="campo">
             <label>Categoría</label>
             <select name="categoria">
-              <option value="campus">Campus</option>
-              <option value="matematicas">Matemáticas</option>
-              <option value="sistemas">Sistemas</option>
-              <option value="academico">Académico</option>
-              <option value="otro">Otro</option>
+              {% for valor, etiqueta in categorias %}
+                <option value="{{ valor }}">{{ etiqueta }}</option>
+              {% endfor %}
             </select>
           </div>
         </div>
@@ -59,6 +57,8 @@
               </form>
             </td>
           </tr>
+        {% else %}
+          <tr><td colspan="5" class="u-texto-tenue">Todavía no hay foros.</td></tr>
         {% endfor %}
       </tbody>
     </table>
