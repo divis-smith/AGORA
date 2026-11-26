@@ -19,7 +19,7 @@ En la columna Estado anotamos si el requerimiento ya está hecho en `main`: "Sí
 | RF-11 | Perfil | El sistema debe permitir consultar el perfil propio y el de otros usuarios con sus publicaciones y estadísticas. | Sí |
 | RF-12 | Perfil | El sistema debe permitir seguir y dejar de seguir a otros usuarios y consultar la lista de seguidores y de seguidos. | Sí |
 | RF-13 | Perfil | El sistema debe permitir crear proyectos en el portafolio (con imagen opcional), consultar el portafolio y aplaudir proyectos. | Sí |
-| RF-14 | Perfil | El sistema debe permitir ver el detalle de un proyecto, editarlo, eliminarlo y comentarlo. | Parcial: se puede abrir el detalle de un proyecto desde el portafolio (autor, descripción, tecnologías, estado, enlaces, aplausos y comentarios) y aplaudirlo; faltan comentar, editar y eliminar |
+| RF-14 | Perfil | El sistema debe permitir ver el detalle de un proyecto, editarlo, eliminarlo y comentarlo. | Parcial: se puede abrir el detalle de un proyecto desde el portafolio (autor, descripción, tecnologías, estado, enlaces, aplausos y comentarios), aplaudirlo y comentarlo; faltan editar y eliminar |
 | RF-15 | Foros | El sistema debe permitir consultar los foros y las preguntas de cada uno. | Sí |
 | RF-16 | Foros | El sistema debe permitir crear preguntas en un foro (tipos: pregunta, apuntes, duda, recurso y debate), con opción anónima. | Sí |
 | RF-17 | Foros | El sistema debe permitir responder preguntas, votar las respuestas y que el autor marque una como aceptada. | Sí |
