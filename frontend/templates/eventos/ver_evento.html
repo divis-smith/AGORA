@@ -41,10 +41,19 @@
       </div>
     </div>
 
-    {% if evento.agenda %}
+    {% if evento.agenda_items or evento.agenda_texto %}
       <div class="sec-titulo">Agenda</div>
       <div class="ve-card evento-seccion">
-        <p class="u-texto-vacio">{{ evento.agenda }}</p>
+        {% if evento.agenda_items %}
+          {% for actividad in evento.agenda_items %}
+            <div class="agenda-item">
+              <span class="agenda-hora">{{ actividad.hora }}</span>
+              <span class="agenda-texto">{{ actividad.item }}</span>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="u-texto-vacio">{{ evento.agenda_texto }}</p>
+        {% endif %}
       </div>
     {% endif %}
 
