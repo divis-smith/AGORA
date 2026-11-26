@@ -95,20 +95,22 @@ def crear_blueprint(get_db, socketio):
             flash('Usuario no encontrado.', 'error')
             return redirect(url_for('social.explorar'))
 
+        # Las publicaciones anónimas solo las ve su autor en su propio perfil.
+        es_propio = viewer_id == usuario_id
         stats = {
-            'total_posts': servicio.contar_publicaciones(conn, usuario_id),
+            'total_posts': servicio.contar_publicaciones(conn, usuario_id, incluir_anonimas=es_propio),
             'total_seguidores': servicio.contar_seguidores(conn, usuario_id),
             'total_siguiendo': servicio.contar_siguiendo(conn, usuario_id),
         }
         ya_sigue = servicio.ya_sigue(conn, viewer_id, usuario_id)
-        posts = servicio.publicaciones_recientes(conn, usuario_id)
+        posts = servicio.publicaciones_recientes(conn, usuario_id, incluir_anonimas=es_propio)
         conn.close()
 
         return render_template('social/perfil_usuario.html',
                                usuario=usuario,
                                stats=stats,
                                posts=posts, ya_sigue=ya_sigue,
-                               es_propio=(viewer_id == usuario_id),
+                               es_propio=es_propio,
                                pagina_activa='perfil')
 
     def _lista_de_contactos(usuario_id, listar, modo):
