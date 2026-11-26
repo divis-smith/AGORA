@@ -23,7 +23,6 @@
         </tr>
       </thead>
       <tbody>
-        {#- Suspender y reactivar cuentas desde esta tabla llega con el issue #20. #}
         {% for u in usuarios %}
           <tr>
             <td class="u-texto-tenue">#{{ u.id }}</td>
@@ -43,6 +42,16 @@
                     {% endfor %}
                   </select>
                   <button type="submit" class="acc-btn">Cambiar</button>
+                </form>
+                <form class="acc-form" method="POST" action="{{ url_for('moderacion.admin_cambiar_estado', usuario_id=u.id) }}"
+                      data-confirmar="{{ '¿Suspender la cuenta de ' ~ u.nombre ~ '? No podrá iniciar sesión.' if u.activo else '¿Reactivar la cuenta de ' ~ u.nombre ~ '?' }}">
+                  {% if u.activo %}
+                    <input type="hidden" name="accion" value="suspender">
+                    <button type="submit" class="acc-btn danger">Suspender</button>
+                  {% else %}
+                    <input type="hidden" name="accion" value="activar">
+                    <button type="submit" class="acc-btn">Activar</button>
+                  {% endif %}
                 </form>
               {% endif %}
             </td>
