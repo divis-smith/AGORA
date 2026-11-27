@@ -123,3 +123,40 @@ def totales_panel(conn):
             "SELECT COUNT(*) AS n FROM eventos WHERE fecha >= date('now')"
         ).fetchone()['n'],
     }
+
+
+def publicaciones_por_categoria(conn):
+    """Cuenta las publicaciones vigentes de cada categoría, de mayor a menor.
+
+    Las anónimas sí cuentan: la categoría no dice quién escribió.
+    """
+    return conn.execute("""
+        SELECT categoria, COUNT(*) AS n FROM publicaciones
+        WHERE estado = 'publicado'
+        GROUP BY categoria ORDER BY n DESC, categoria
+    """).fetchall()
+
+
+def top_publicadores(conn, limite=5):
+    """Devuelve los usuarios con más publicaciones vigentes con su nombre.
+
+    Las anónimas no cuentan, para que el top no delate a sus autores (RNF-08).
+    """
+    return conn.execute("""
+        SELECT u.nombre, COUNT(*) AS n FROM publicaciones p
+        JOIN usuarios u ON u.id = p.autor_id
+        WHERE p.estado = 'publicado' AND p.es_anonimo = 0
+        GROUP BY u.id ORDER BY n DESC, u.nombre LIMIT ?
+    """, (limite,)).fetchall()
+
+
+def registros_ultimos_dias(conn, dias=7):
+    """Cuenta los usuarios registrados por día en los últimos `dias` días, hoy incluido.
+
+    Solo aparecen los días con registros, del más antiguo al más reciente.
+    """
+    return conn.execute("""
+        SELECT date(creado_en) AS dia, COUNT(*) AS n FROM usuarios
+        WHERE date(creado_en) >= date('now', ?)
+        GROUP BY dia ORDER BY dia
+    """, (f'-{dias - 1} day',)).fetchall()

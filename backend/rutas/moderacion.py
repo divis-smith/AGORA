@@ -110,6 +110,21 @@ def crear_blueprint(get_db):
         conn.close()
         return render_template('moderacion/panel.html', stats=stats, pagina_activa='admin')
 
+    @blueprint.route('/admin/estadisticas')
+    @login_required
+    @admin_required
+    def admin_estadisticas():
+        conn = get_db()
+        try:
+            posts_cat = servicio.publicaciones_por_categoria(conn)
+            top_usuarios = servicio.top_publicadores(conn)
+            usuarios_dia = servicio.registros_ultimos_dias(conn)
+        finally:
+            conn.close()
+        return render_template('moderacion/estadisticas.html', posts_cat=posts_cat,
+                               top_usuarios=top_usuarios, usuarios_dia=usuarios_dia,
+                               pagina_activa='admin')
+
     @blueprint.route('/admin/foros', methods=['GET', 'POST'])
     @login_required
     @admin_required
