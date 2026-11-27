@@ -52,7 +52,7 @@ flowchart TB
 
 ## Cosas que tener en cuenta
 - Cada módulo funcional tiene un Blueprint en `backend/rutas/`, un servicio en `backend/servicios/` (con las consultas SQL) y su carpeta en `frontend/templates/` y `frontend/static/`. Así se agrega un módulo sin tocar el núcleo (RNF-05).
-- La configuración viene de variables de entorno (`SECRET_KEY`, `DATABASE_PATH`, `FLASK_DEBUG`); la aplicación no lee el archivo `.env` por sí sola.
+- La configuración viene de variables de entorno (`AGORA_ENTORNO`, `SECRET_KEY`, `DATABASE_PATH`, `FLASK_DEBUG`); la aplicación no lee el archivo `.env` por sí sola. Con `AGORA_ENTORNO=produccion`, `nucleo/configuracion.py` detiene el arranque si `SECRET_KEY` no es segura.
 - Las imágenes subidas se validan, se vuelven a codificar con Pillow y se guardan en `frontend/static/uploads/` (que Git ignora).
 - Los roles son estudiante, moderador y administrador (columna `usuarios.rol`). `before_request` expulsa las sesiones de cuentas suspendidas.
 - Los tests (`tests/`) y el workflow de CI (`.github/workflows/tests.yml`) corren con `unittest`.

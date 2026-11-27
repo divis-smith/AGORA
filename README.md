@@ -75,7 +75,8 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 
 | Variable | Para qué sirve | Valor por defecto |
 |---|---|---|
-| `SECRET_KEY` | Firma las sesiones. Cámbiala por un valor aleatorio fuera de desarrollo. | `dev-only-change-me` |
+| `AGORA_ENTORNO` | `desarrollo` o `produccion`. En `produccion` la aplicación no arranca si `SECRET_KEY` falta, es un valor de ejemplo o tiene menos de 32 caracteres. | `desarrollo` |
+| `SECRET_KEY` | Firma las sesiones. En desarrollo se usa un valor fijo; en producción es obligatoria y debe ser aleatoria. Puedes generarla con `python -c "import secrets; print(secrets.token_hex(32))"`. | `dev-only-change-me` (solo en desarrollo) |
 | `DATABASE_PATH` | Ruta del archivo SQLite. | `data/agora.db` |
 | `FLASK_DEBUG` | `1` activa el modo de depuración. | apagado |
 
@@ -85,8 +86,7 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 python -m unittest discover -s tests -v
 ```
 
-Son 208 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, suspender y reactivar cuentas desde el panel, la gestión de foros, el detalle de proyectos del portafolio, los comentarios en proyectos, la agenda de los eventos, ajustes de cuenta, subida de imágenes, notificaciones por comentarios, marcar y eliminar notificaciones, que el perfil público no muestre publicaciones anónimas y abrir el chat con la propia cuenta; todavía no hay pruebas de registro, preguntas y respuestas de los foros, el resto de los eventos, el resto de los mensajes ni búsqueda.
-
+Son 217 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, suspender y reactivar cuentas desde el panel, la gestión de foros, el detalle de proyectos del portafolio, los comentarios en proyectos, la agenda de los eventos, ajustes de cuenta, subida de imágenes, notificaciones por comentarios, marcar y eliminar notificaciones, que el perfil público no muestre publicaciones anónimas, abrir el chat con la propia cuenta y que la SECRET_KEY sea obligatoria en producción; todavía no hay pruebas de registro, preguntas y respuestas de los foros, el resto de los eventos, el resto de los mensajes ni búsqueda.
 ## Estructura del proyecto
 
 ```
