@@ -28,9 +28,6 @@
       </div>
     </div>
 
-    {#- Las secciones sin pantalla todavía se muestran como "Próximamente", sin enlace:
-        estadísticas (#33).
-        Cuando cada una exista, se cambia su <div> por un <a href="{{ url_for(...) }}">. #}
     <div class="menu-grid">
       <a href="{{ url_for('moderacion.admin_usuarios') }}" class="menu-card">
         <div class="menu-card-icon">👥</div>
@@ -47,11 +44,11 @@
         <div class="menu-card-titulo">Gestión de foros</div>
         <div class="menu-card-desc">Crear y eliminar foros temáticos de la plataforma.</div>
       </a>
-      <div class="menu-card menu-card--pendiente" aria-disabled="true">
+      <a href="{{ url_for('moderacion.admin_estadisticas') }}" class="menu-card">
         <div class="menu-card-icon">📊</div>
-        <div class="menu-card-titulo">Estadísticas <span class="menu-card-etiqueta">Próximamente</span></div>
-        <div class="menu-card-desc">Actividad de usuarios, posts por categoría y más.</div>
-      </div>
+        <div class="menu-card-titulo">Estadísticas</div>
+        <div class="menu-card-desc">Posts por categoría, top publicadores y registros de la semana.</div>
+      </a>
     </div>
   </main>
 </div>
