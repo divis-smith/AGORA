@@ -87,6 +87,21 @@ def cambiar_rol(conn, admin_id, usuario_id, rol):
     return None
 
 
+def cambiar_activo(conn, admin_id, usuario_id, activo):
+    """Suspende (activo=False) o reactiva (activo=True) una cuenta.
+
+    Devuelve el mensaje de error, o None si la cambió. La sesión abierta de una
+    cuenta suspendida se cierra en su siguiente petición (ver `validar_sesion`).
+    """
+    if usuario_id == admin_id:
+        return 'No puedes suspender tu propia cuenta.'
+    if obtener_estado(conn, usuario_id) is None:
+        return 'El usuario no existe.'
+    conn.execute("UPDATE usuarios SET activo = ? WHERE id = ?", (int(activo), usuario_id))
+    conn.commit()
+    return None
+
+
 def actualizar_password(conn, usuario_id, password):
     conn.execute(
         "UPDATE usuarios SET password = ? WHERE id = ?",
