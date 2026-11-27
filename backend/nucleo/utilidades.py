@@ -39,6 +39,36 @@ def parsear_tecnologias(texto):
             if tecnologia.strip()]
 
 
+def parsear_agenda(texto):
+    """Convierte la agenda guardada como JSON en filas de hora y actividad.
+
+    Devuelve (actividades, texto_libre). Si el texto es una lista JSON, `actividades`
+    trae un diccionario {'hora', 'item'} por cada elemento con contenido y `texto_libre`
+    queda vacío. Si no es una lista JSON válida, `actividades` queda vacía y `texto_libre`
+    trae el texto tal cual, para mostrarlo sin romper la página.
+    """
+    texto = (texto or '').strip()
+    if not texto:
+        return [], ''
+    try:
+        datos = json.loads(texto)
+    except (json.JSONDecodeError, TypeError):
+        return [], texto
+    if not isinstance(datos, list):
+        return [], texto
+    actividades = []
+    for elemento in datos:
+        if isinstance(elemento, dict):
+            hora = str(elemento.get('hora') or '').strip()
+            item = str(elemento.get('item') or '').strip()
+        else:
+            hora = ''
+            item = '' if elemento is None else str(elemento).strip()
+        if item:
+            actividades.append({'hora': hora, 'item': item})
+    return actividades, ''
+
+
 def procesar_evento(row):
     """Añade campos calculados a un evento."""
     evento = dict(row)
@@ -51,6 +81,7 @@ def procesar_evento(row):
         evento['fecha_mes'] = '---'
     evento['inscrito'] = bool(evento.get('inscrito'))
     evento['cupos_libres'] = evento.get('cupos_libres') or '∞'
+    evento['agenda_items'], evento['agenda_texto'] = parsear_agenda(evento.get('agenda'))
     return evento
 
 
