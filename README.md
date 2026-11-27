@@ -6,11 +6,11 @@
 
 Hay tres roles: estudiante, moderador y administrador.
 
-**Estudiantes.** Crean una cuenta y entran con correo y contraseña. En el feed publican (con imagen opcional, de forma anónima si quieren), reaccionan, comentan y filtran por categoría. En los foros hacen preguntas, responden, votan las respuestas y marcan la correcta. Arman su portafolio de proyectos y abren el detalle de cada uno, siguen a otros estudiantes, buscan publicaciones, personas y foros desde Explorar, y consultan las tendencias. Crean eventos, se inscriben (con control de cupos) y ven los participantes. Se escriben mensajes privados en tiempo real, reciben notificaciones (y las marcan como leídas o las eliminan), editan su perfil, su correo y su contraseña, y tienen una sección de ayuda.
+**Estudiantes.** Crean una cuenta y entran con correo y contraseña. En el feed publican (con imagen opcional, de forma anónima si quieren), reaccionan, comentan y filtran por categoría. En los foros hacen preguntas, responden, votan las respuestas y marcan la correcta. Arman su portafolio de proyectos y abren el detalle de cada uno para aplaudirlo y comentarlo, siguen a otros estudiantes, buscan publicaciones, personas y foros desde Explorar, y consultan las tendencias. Crean eventos, se inscriben (con control de cupos) y ven los participantes. Se escriben mensajes privados en tiempo real, reciben notificaciones (y las marcan como leídas o las eliminan), editan su perfil, su correo y su contraseña, y tienen una sección de ayuda.
 
 **Moderadores.** Revisan los reportes abiertos y los resuelven: ignorarlos, eliminar el contenido o suspender al usuario. Una cuenta suspendida pierde su sesión y no puede volver a entrar.
 
-**Administradores.** Tienen los mismos permisos que los moderadores (también pueden eliminar cualquier evento) y, solo ellos, un panel de administración en `/admin` con los totales de la plataforma (usuarios activos, publicaciones, eventos próximos y reportes nuevos). Desde ahí entran a la gestión de usuarios, donde buscan por nombre o correo y cambian el rol de cualquiera menos el suyo.
+**Administradores.** Tienen los mismos permisos que los moderadores (también pueden eliminar cualquier evento) y, solo ellos, un panel de administración en `/admin` con los totales de la plataforma (usuarios activos, publicaciones, eventos próximos y reportes nuevos). Desde ahí entran a la gestión de usuarios, donde buscan por nombre o correo y cambian el rol de cualquiera menos el suyo, y a la gestión de foros, donde crean foros nuevos y eliminan los que sobran junto con sus preguntas y respuestas.
 
 Falta por hacer, entre otras cosas: verificar la cuenta y recuperar la contraseña, hashtags y visibilidad de las publicaciones, las preferencias de privacidad y apariencia, suspender, reactivar y editar usuarios y gestionar los foros desde el panel de administración, y la interfaz para reportar comentarios y usuarios (las publicaciones ya se pueden reportar). Todo eso está en el [backlog inicial](docs/backlog-inicial.md) y el estado de cada requerimiento en [`docs/requerimientos/`](docs/requerimientos/funcionales.md).
 
@@ -85,7 +85,8 @@ La aplicación lee estas variables del entorno. **No carga el archivo `.env` por
 python -m unittest discover -s tests -v
 ```
 
-Son 152 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, suspender y reactivar cuentas desde el panel, el detalle de proyectos del portafolio, ajustes de cuenta, subida de imágenes, notificaciones por comentarios y marcar y eliminar notificaciones; todavía no hay pruebas de registro, foros, eventos, mensajes ni búsqueda.
+Son 187 pruebas. Cubren reportes, suspensión de cuentas, el panel de administración, la gestión de usuarios y roles, suspender y reactivar cuentas desde el panel, la gestión de foros, el detalle de proyectos del portafolio, los comentarios en proyectos, ajustes de cuenta, subida de imágenes, notificaciones por comentarios, marcar y eliminar notificaciones y que el perfil público no muestre publicaciones anónimas; todavía no hay pruebas de registro, preguntas y respuestas de los foros, eventos, mensajes ni búsqueda.
+
 ## Estructura del proyecto
 
 ```
