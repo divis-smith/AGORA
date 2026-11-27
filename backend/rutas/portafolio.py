@@ -36,6 +36,29 @@ def crear_blueprint(get_db):
         return render_template('portafolio/ver_proyecto.html', proyecto=proyecto,
                                comentarios=comentarios, ya_aplaudi=bool(proyecto['ya_aplaudi']))
 
+    @blueprint.route('/portafolio/<int:proy_id>/comentar', methods=['POST'])
+    @login_required
+    def comentar_proyecto(proy_id):
+        contenido = request.form.get('contenido', '').strip()
+        volver = url_for('portafolio.ver_proyecto', proy_id=proy_id) + '#comentarios'
+        if not contenido:
+            flash('El comentario no puede estar vacío.', 'error')
+            return redirect(volver)
+        if len(contenido) > servicio.MAX_COMENTARIO:
+            flash(f'El comentario no puede superar {servicio.MAX_COMENTARIO} caracteres.', 'error')
+            return redirect(volver)
+
+        conn = get_db()
+        try:
+            servicio.comentar(conn, proy_id, session['user_id'], contenido)
+        except ValueError:
+            flash('Proyecto no encontrado.', 'error')
+            return redirect(url_for('portafolio.portafolio'))
+        finally:
+            conn.close()
+        flash('Comentario publicado.', 'success')
+        return redirect(volver)
+
     @blueprint.route('/nuevo-proyecto', methods=['POST'])
     @login_required
     def nuevo_proyecto():
