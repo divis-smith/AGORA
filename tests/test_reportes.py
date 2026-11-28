@@ -133,6 +133,16 @@ class SuspenderUsuarioCorrecto(ModeracionBase):
         self.assertEqual(self.activo(AUTOR), 0)
         self.assertEqual(self.activo(TESTIGO), 1)
         self.assertEqual(self.estado_reporte(reporte), 'resuelto')
+        fila = self.consulta(
+            "SELECT revisado_por, resolucion, resuelto_en FROM reportes WHERE id = ?",
+            reporte,
+        )
+        self.assertEqual(fila['revisado_por'], MODERADOR)
+        self.assertEqual(
+            fila['resolucion'],
+            'Se tomó acción sobre el contenido reportado.',
+        )
+        self.assertIsNotNone(fila['resuelto_en'])
 
     def test_reporte_de_comentario_suspende_a_su_autor(self):
         reporte = self.crear_reporte('comentario', COMENTARIO)
@@ -221,8 +231,17 @@ class CasosLimite(ModeracionBase):
     def test_reporte_con_contenido_borrado_se_puede_ignorar(self):
         reporte = self.crear_reporte('comentario', COMENTARIO)
         self.ejecutar("DELETE FROM comentarios WHERE id = ?", COMENTARIO)
+
         self.resolver(MODERADOR, reporte, accion='ignorar')
-        self.assertEqual(self.estado_reporte(reporte), 'resuelto')
+
+        fila = self.consulta(
+            "SELECT estado, revisado_por, resolucion, resuelto_en FROM reportes WHERE id = ?",
+            reporte,
+        )
+        self.assertEqual(fila['estado'], 'descartado')
+        self.assertEqual(fila['revisado_por'], MODERADOR)
+        self.assertIsNone(fila['resolucion'])
+        self.assertIsNotNone(fila['resuelto_en'])
 
     def test_reporte_cerrado_no_se_vuelve_a_aplicar(self):
         reporte = self.crear_reporte('usuario', TESTIGO, estado='resuelto')
@@ -240,7 +259,17 @@ class CasosLimite(ModeracionBase):
         fila = self.consulta("SELECT estado FROM publicaciones WHERE id = ?", PUBLICACION)
         self.assertEqual(fila['estado'], 'eliminado')
         self.assertEqual(self.activo(AUTOR), 1)
-        self.assertEqual(self.estado_reporte(reporte), 'resuelto')
+        cierre = self.consulta(
+            "SELECT estado, revisado_por, resolucion, resuelto_en FROM reportes WHERE id = ?",
+            reporte,
+        )
+        self.assertEqual(cierre['estado'], 'resuelto')
+        self.assertEqual(cierre['revisado_por'], MODERADOR)
+        self.assertEqual(
+            cierre['resolucion'],
+            'Se tomó acción sobre el contenido reportado.',
+        )
+        self.assertIsNotNone(cierre['resuelto_en'])
 
     def test_eliminar_comentario_reportado(self):
         self.resolver(MODERADOR, self.crear_reporte('comentario', COMENTARIO), accion='eliminar')
@@ -319,6 +348,35 @@ class PantallaDeModeracion(ModeracionBase):
 class PantallaDeMisReportes(ModeracionBase):
     def html(self, usuario=TESTIGO):
         return self.cliente(usuario).get('/reportes')
+
+    def test_muestra_el_estado_y_resolucion_segun_el_cierre(self):
+        descartado = self.crear_reporte(
+            'publicacion', PUBLICACION, reportado_por=TESTIGO,
+        )
+        resuelto = self.crear_reporte(
+            'comentario', COMENTARIO, reportado_por=TESTIGO,
+        )
+        enviado = self.crear_reporte(
+            'usuario', AUTOR, reportado_por=TESTIGO,
+        )
+        self.ejecutar(
+            "UPDATE reportes SET estado = ?, resolucion = ? WHERE id = ?",
+            'descartado', None, descartado,
+        )
+        self.ejecutar(
+            "UPDATE reportes SET estado = ?, resolucion = ? WHERE id = ?",
+            'resuelto', 'Se tomó acción sobre el contenido reportado.', resuelto,
+        )
+
+        respuesta = self.html()
+
+        self.assertEqual(respuesta.status_code, 200)
+        contenido = respuesta.get_data(as_text=True)
+        self.assertIn('estado-descartado', contenido)
+        self.assertIn('estado-resuelto', contenido)
+        self.assertIn('estado-enviado', contenido)
+        self.assertIn('Resolución: Se tomó acción sobre el contenido reportado.', contenido)
+        self.assertEqual(contenido.count('Resolución:'), 1)
 
     def test_muestra_mis_reportes_con_su_estado_actual(self):
         self.crear_reporte(

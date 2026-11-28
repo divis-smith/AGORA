@@ -95,11 +95,26 @@ def suspender_usuario(conn, usuario_id):
     conn.execute("UPDATE usuarios SET activo = 0 WHERE id = ?", (usuario_id,))
 
 
-def cerrar_reporte(conn, reporte_id, revisor_id):
-    """Marca el reporte como resuelto y confirma los cambios de la moderación."""
+def cerrar_reporte(conn, reporte_id, revisor_id, accion):
+    """Cierra el reporte según la acción de moderación."""
+    if accion not in ACCIONES_REPORTE:
+        raise ValueError(f'Acción de reporte no válida: {accion}')
+
+    if accion == 'ignorar':
+        estado = 'descartado'
+        resolucion = None
+    else:
+        estado = 'resuelto'
+        resolucion = 'Se tomó acción sobre el contenido reportado.'
+
     conn.execute(
-        "UPDATE reportes SET estado = 'resuelto', revisado_por = ? WHERE id = ?",
-        (revisor_id, reporte_id),
+        """
+        UPDATE reportes
+        SET estado = ?, revisado_por = ?, resolucion = ?,
+            resuelto_en = CURRENT_TIMESTAMP
+        WHERE id = ?
+        """,
+        (estado, revisor_id, resolucion, reporte_id),
     )
     conn.commit()
 

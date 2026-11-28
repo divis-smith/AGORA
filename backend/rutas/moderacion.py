@@ -93,7 +93,7 @@ def crear_blueprint(get_db):
                     flash(error, 'error')
                     return redirect(url_for('moderacion.moderacion'))
                 servicio.suspender_usuario(conn, objetivo['id'])
-            servicio.cerrar_reporte(conn, reporte_id, session['user_id'])
+            servicio.cerrar_reporte(conn, reporte_id, session['user_id'], accion)
             flash(f'Reporte #{reporte_id} resuelto ({accion}).', 'success')
         finally:
             conn.close()
