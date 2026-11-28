@@ -1,8 +1,22 @@
 """Datos de demostración de ÁGORA: cuentas, publicaciones, foros, eventos y mensajes."""
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from werkzeug.security import generate_password_hash
+
+
+# Días desde hoy en que caen los eventos de demostración, en el mismo orden de eventos_data.
+DIAS_HASTA_EVENTOS = (7, 12, 17, 20)
+
+
+def fechas_eventos_demo(hoy=None):
+    """Devuelve las fechas (AAAA-MM-DD) de los eventos de demostración contadas desde hoy.
+
+    Se usa la fecha en UTC porque las consultas comparan con date('now') de SQLite, que es UTC;
+    así los eventos siguen siendo próximos aunque la hora local vaya atrasada respecto a UTC.
+    """
+    hoy = hoy or datetime.now(timezone.utc).date()
+    return [(hoy + timedelta(days=dias)).isoformat() for dias in DIAS_HASTA_EVENTOS]
 
 
 def insertar_datos_demo(conn):
@@ -195,12 +209,14 @@ def insertar_datos_demo(conn):
         c.execute("INSERT OR IGNORE INTO aplausos_proyecto (usuario_id, proyecto_id) VALUES (?,?)", (uid, pid))
 
     # ── Eventos ──────────────────────────────────────────────────
+    # Las fechas se calculan al crear la base para que los eventos siempre sean próximos (#29).
+    f_hackathon, f_feria, f_torneo, f_charla = fechas_eventos_demo()
     eventos_data = [
-        (U_VALE,  'Hackathon Univalle 2026 — retos de IA',  'academico',  '2026-06-15', '09:00', '18:00', 'Auditorio Paraninfo', 200, 'Semillero SIRIUS',
+        (U_VALE,  'Hackathon Univalle 2026 — retos de IA',  'academico',  f_hackathon, '09:00', '18:00', 'Auditorio Paraninfo', 200, 'Semillero SIRIUS',
          '[{"hora":"09:00","item":"Apertura y registro"},{"hora":"10:00","item":"Inicio del hackathon"},{"hora":"13:00","item":"Almuerzo y networking"},{"hora":"17:00","item":"Presentación de proyectos"},{"hora":"18:00","item":"Premiación y cierre"}]'),
-        (U_DIVIS, 'Feria de Semilleros — exposición de proyectos', 'cultural', '2026-06-20', '14:00', '18:00', 'Sala Múltiple B', 150, 'Vicerrectoría Académica', None),
-        (U_ANDRES,'Torneo Intercambio de Robótica',          'deportivo',  '2026-06-25', '08:00', '17:00', 'Lab. Mecatrónica',   80,  'Club de Robótica', None),
-        (U_LAURA, 'Charla: salud mental en la universidad',  'bienestar',  '2026-06-28', '11:00', '13:00', 'Auditorio Sur',      120, 'Bienestar Universitario', None),
+        (U_DIVIS, 'Feria de Semilleros — exposición de proyectos', 'cultural', f_feria, '14:00', '18:00', 'Sala Múltiple B', 150, 'Vicerrectoría Académica', None),
+        (U_ANDRES,'Torneo Intercambio de Robótica',          'deportivo',  f_torneo, '08:00', '17:00', 'Lab. Mecatrónica',   80,  'Club de Robótica', None),
+        (U_LAURA, 'Charla: salud mental en la universidad',  'bienestar',  f_charla, '11:00', '13:00', 'Auditorio Sur',      120, 'Bienestar Universitario', None),
     ]
     ev_ids = []
     for (cid, titulo, cat, fecha, hi, hf, lugar, cupos, org, agenda) in eventos_data:

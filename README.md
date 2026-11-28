@@ -47,7 +47,7 @@ pip install -r backend/requirements.txt
 python scripts/crear_db.py
 ```
 
-Esto crea `data/agora.db` con las tablas de `scripts/esquema.sql` y contenido de ejemplo. Si quieres empezar de cero, borra ese archivo y vuelve a ejecutar el comando.
+Esto crea `data/agora.db` con las tablas de `scripts/esquema.sql` y contenido de ejemplo. Las fechas de los eventos de ejemplo se calculan desde el día en que ejecutas el comando (entre 7 y 20 días después), así que siempre aparecen como próximos. Si quieres empezar de cero, borra ese archivo y vuelve a ejecutar el comando.
 
 **4. Arranca la aplicación.**
 
