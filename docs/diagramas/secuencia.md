@@ -64,9 +64,14 @@ sequenceDiagram
         R->>S: suspender_usuario(objetivo)
         S->>DB: UPDATE usuarios SET activo = 0
     end
-    R->>S: cerrar_reporte(id, moderador)
-    S->>DB: UPDATE reportes SET estado = resuelto
-    R-->>M: "Reporte #N resuelto"
+    R->>S: cerrar_reporte(id, moderador, acción)
+    alt acción = ignorar
+        S->>DB: UPDATE reportes SET estado = descartado, resolucion = NULL, revisado_por y resuelto_en
+        R-->>M: "Reporte #N descartado"
+    else acción = eliminar o suspender
+        S->>DB: UPDATE reportes SET estado = resuelto, resolucion = "Se tomó acción sobre el contenido reportado.", revisado_por y resuelto_en
+        R-->>M: "Reporte #N resuelto"
+    end
 ```
 
 ## Marcar como leída y eliminar una notificación (RF-41 y RF-42): `POST /notificaciones/<id>/leida` y `POST /notificaciones/<id>/eliminar`
