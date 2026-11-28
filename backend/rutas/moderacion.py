@@ -6,6 +6,12 @@ from backend.rutas.decoradores import crear_admin_required, crear_moderador_requ
 from backend.servicios import cuentas, foros
 from backend.servicios import moderacion as servicio
 
+# accion del formulario de /admin/usuarios -> (nuevo valor de activo, mensaje)
+ACCIONES_ESTADO = {
+    'suspender': (False, 'Cuenta suspendida.'),
+    'activar': (True, 'Cuenta activada.'),
+}
+
 
 def crear_blueprint(get_db):
     """Crea el Blueprint de moderación."""
@@ -174,6 +180,21 @@ def crear_blueprint(get_db):
             flash(error, 'error')
         else:
             flash('Rol actualizado.', 'success')
+        return redirect(url_for('moderacion.admin_usuarios'))
+
+    @blueprint.route('/admin/usuarios/<int:usuario_id>/estado', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_cambiar_estado(usuario_id):
+        accion = request.form.get('accion', '')
+        if accion not in ACCIONES_ESTADO:
+            flash('Acción no válida.', 'error')
+            return redirect(url_for('moderacion.admin_usuarios'))
+        activo, mensaje = ACCIONES_ESTADO[accion]
+        conn = get_db()
+        error = cuentas.cambiar_activo(conn, session['user_id'], usuario_id, activo)
+        conn.close()
+        flash(error or mensaje, 'error' if error else 'success')
         return redirect(url_for('moderacion.admin_usuarios'))
 
     return blueprint
