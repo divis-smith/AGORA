@@ -42,6 +42,12 @@ def crear_blueprint(get_db, socketio):
             return redirect(url_for('mensajes.mensajes'))
 
         me = session['user_id']
+        if otro_id == me:
+            # No existe el chat con uno mismo: antes esto respondía error 500 (Issue #28).
+            conn.close()
+            flash('No puedes abrir un chat contigo mismo.', 'error')
+            return redirect(url_for('mensajes.mensajes'))
+
         conv_id = servicio.obtener_o_crear_conversacion(conn, me, otro_id)
         servicio.marcar_leidos(conn, conv_id, me)
         mensajes_list = servicio.listar_mensajes(conn, conv_id)

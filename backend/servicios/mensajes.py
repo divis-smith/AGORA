@@ -44,6 +44,8 @@ def obtener_destinatario(conn, usuario_id):
 
 def obtener_o_crear_conversacion(conn, usuario_id, otro_id):
     """Devuelve el id de la conversación entre dos usuarios, creándola si no existe."""
+    if usuario_id == otro_id:
+        raise ValueError('Una conversación necesita dos usuarios distintos.')
     conversacion = conn.execute("""
         SELECT c.id FROM conversaciones c
         JOIN participantes_conversacion p1 ON p1.conversacion_id = c.id AND p1.usuario_id = ?

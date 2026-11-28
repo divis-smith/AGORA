@@ -109,3 +109,18 @@ def listar_comentarios(conn, proyecto_id):
         ORDER BY c.creado_en, c.id
     """, (proyecto_id,)).fetchall()
     return [dict(fila) for fila in filas]
+
+
+MAX_COMENTARIO = 1000
+
+
+def comentar(conn, proyecto_id, autor_id, contenido):
+    """Guarda un comentario en el proyecto. Lanza ValueError si el proyecto no existe."""
+    existe = conn.execute("SELECT 1 FROM proyectos WHERE id = ?", (proyecto_id,)).fetchone()
+    if existe is None:
+        raise ValueError('Proyecto no encontrado.')
+    conn.execute(
+        "INSERT INTO comentarios_proyecto (proyecto_id, autor_id, contenido) VALUES (?,?,?)",
+        (proyecto_id, autor_id, contenido),
+    )
+    conn.commit()
